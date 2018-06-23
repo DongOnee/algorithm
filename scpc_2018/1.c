@@ -63,9 +63,13 @@ int main(void)
      int n, k;
      scanf("%d %d", &n, &k);
      int a[200000];
-     for (int i=0; i<N; i++)
-       scanf("%d", &a[i]);
+     for (int i=0; i<n; i++) scanf("%d", &a[i]);
 
+     for (int i=0; i<n; i++) {
+       for (int j=0; j<n_bus; j++) {
+         in_bus(buses[j], a[i]);
+       }
+     }
 
 
 		/////////////////////////////////////////////////////////////////////////////////////////////
