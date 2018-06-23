@@ -29,7 +29,7 @@ node a[200000];
 bus b[200000];
 
 int check(int bus_index, int input_index) {
-  node *tmp = b[bus_index]->start;
+  node *tmp = b[bus_index].start;
   while ( tmp!=NULL ) {
 		int diff = tmp->a - a->a;
 		if (diff < 0) diff *=-1;
@@ -38,9 +38,9 @@ int check(int bus_index, int input_index) {
 	return 1;
 }
 
-void bus_input(bus *b, node* a) {
-	if (b->size == 0) b->start =a;
-	else b->end->next = a;
+void bus_input(int bus_index, int input_index) {
+	if (b[bus_index].size == 0) b[bus_index].start =a;
+	else b[bus_index].end->next = a;
 	b->end = a;
 	b->size++;
 }
