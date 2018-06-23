@@ -12,83 +12,70 @@ Please be very careful.
 
 int Answer;
 
-<<<<<<< HEAD
-int N, K;
-int A[200000][2];
-
-int n_buses;
-
-typedef struct node{
+typedef struct node {
   int a;
   struct node* next;
-} n;
+} node;
 
-typedef struct {
+typedef struct bus {
+  node *start;
+  node *end;
   int size;
-  n* start;
-  n* end;
 } bus;
 
-void input_bus(bus* b, n* a) {
-  if(b->size == 0) {
-    b->start = a;
-    b->end = a;
-  } else {
-    b->end->next = a;
-    b->end = a;
+int n, k;
+
+node a[200000];
+bus b[200000];
+
+int check(int bus_index, int input_index) {
+  node *tmp = b[bus_index]->start;
+  while ( tmp!=NULL ) {
+		int diff = tmp->a - a->a;
+		if (diff < 0) diff *=-1;
+		if (diff <= k) return 0;
   }
-  b->size++;
+	return 1;
 }
 
-n* output_bus(bus* b) {
-  n* tmp;
-  if (b->size == 1) {
-    tmp = b->end;
-    b->start = NULL;
-    b->end = NULL;
-  } else {
-    tmp = b->start;
-    for (int i=2; i<b->size; i++) tmp = tmp->next;
-    b->end = tmp;
-    tmp = tmp->next;
-    b->end->next = NULL;
-  }
-  b->size--;
-  return tmp;
+void bus_input(bus *b, node* a) {
+	if (b->size == 0) b->start =a;
+	else b->end->next = a;
+	b->end = a;
+	b->size++;
 }
 
-int check_bus(bus* b, n* a) {
-  n* tmp = b->start;
-  for (int i=0; i<b->size; i++) {
-    int kk = tmp->a - a->a;
-    if (kk < 0) kk *=-1;
-    if (kk <=K) return 0;
-  }
-  return 1;
+void bus_output(bus *b) {
+	node *tmp = b->start;
+	if (b->size == 1) {
+		b->start = NULL;
+		b->end = NULL;
+		b->size--;
+	} else {
+		for (int i=2; i<b->size; i++) tmp = tmp->next;
+		b->end = tmp;
+		tmp->next = NULL;
+		b->size--;
+	}
 }
 
-void dfs(int index) {
-  if(index == N) {
-    if (n_buses < Answer) Answer = n_buses;
-    return; 
+void dfs(int input_index, int bus_count) {
+  if (input_index == n) {
+    if (bus_count < Answer) Answer = bus_count;
+    return;
   }
-  if (Answer < n_buses) return;
-  for(int i=1; i<=n_buses; i++) {
-    if(check_bus(&buses[i], &A[index])) {
-      input_bus(&buses[i], &A[index]);
-      dfs(index+1);
-      output_bus(&buses[i]);
+  for(int i=0; i<bus_count; i++) {
+    if(check(i, input_index)) {
+      bus_input(i, input_index);
+      dfs(input_index+1, bus_count);
+      bus_output(i);
     }
   }
-
-  input_bus(n_buses++, index);
-  dfs(index+1);
-  output_bus(index);
-  n_buses--;
+  bus_input(bus_count+1, input_index);
+  dfs(input_index+1, bus_count+1);
+  bus_output(bus_count+1);
 }
 
-=======
->>>>>>> 092dd80323c7f003ebac8bf5e59dd0d60d7ef361
 int main(void)
 {
 	int T, test_case;
@@ -100,7 +87,7 @@ int main(void)
 	   You may remove the comment symbols(//) in the below statement and use it.
 	   But before submission, you must remove the freopen function or rewrite comment symbols(//).
 	 */
-	// freopen("input.txt", "r", stdin);
+	freopen("sample_input_1.txt", "r", stdin);
 
 	/*
 	   If you remove the statement below, your program's output may not be recorded
@@ -119,6 +106,11 @@ int main(void)
 		   The answer to the case will be stored in variable Answer.
 		 */
 		/////////////////////////////////////////////////////////////////////////////////////////////
+    scanf("%d %d", &n, &k);
+    for (int i=0; i<n; i++) scanf("%d", &a[i].a);
+		
+
+    dfs(0, 0);
 
         		// Print the answer to standard output(screen).
 
