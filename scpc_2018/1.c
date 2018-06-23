@@ -12,6 +12,25 @@ Please be very careful.
 
 int Answer;
 
+typedef struct Bus {
+  int* person[200000];
+  int count;
+} B;
+
+void in_bus(B* bus, int* person) {
+  bus->count++;
+  bus->person[bus->count] = person;
+}
+
+void out_bus(B* bus) {
+  bus->count--;
+}
+
+int is_empty(B* bus) {
+  if (bus->count ==0) return 1;
+  return 0;
+}
+
 int main(void)
 {
 	int T, test_case;
@@ -23,14 +42,14 @@ int main(void)
 	   You may remove the comment symbols(//) in the below statement and use it.
 	   But before submission, you must remove the freopen function or rewrite comment symbols(//).
 	 */
-	// freopen("input.txt", "r", stdin);
+	freopen("input.txt_1", "r", stdin);
 
 	/*
 	   If you remove the statement below, your program's output may not be rocorded
 	   when your program is terminated after the time limit.
 	   For safety, please use setbuf(stdout, NULL); statement.
 	 */
-	//setbuf(stdout, NULL);
+	setbuf(stdout, NULL);
 
 	scanf("%d", &T);
 	for(test_case = 0; test_case < T; test_case++)
@@ -40,10 +59,15 @@ int main(void)
 		   Implement your algorithm here.
 		   The answer to the case will be stored in variable Answer.
 		 */
-     int n;
-     scanf("%n", &n);
-     int k[n];
-     for (int i=0; i<N; i++) scanf("%d", k[i]);
+     Answer =0;
+     int n, k;
+     scanf("%d %d", &n, &k);
+     int a[200000];
+     for (int i=0; i<N; i++)
+       scanf("%d", &a[i]);
+
+
+
 		/////////////////////////////////////////////////////////////////////////////////////////////
 
         		// Print the answer to standard output(screen).
