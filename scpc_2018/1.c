@@ -11,51 +11,46 @@ Please be very careful.
 #include <stdio.h>
 
 int Answer;
-int n, k;
-int a[200000];
 
-typedef struct Bus {
-  int* person[200000];
-  int count;
-} B;
+int N, K;
+int A[200000];
 
-B bus[200000];
+int n_buses;
+int buses[200000];
 
-void dfs(int index, int n_buses) {
-	if (index == n) {
-		if (Answer < n_buses) Answer = n_buses;
-		return;
-	}
-	for (int i=0; i<n_buses; i++) {
-		if (in_bus(&bus[i], a[index])){
-			dfs(index+1, n_buses);
-			out_bus(bus[i]);
-		}
-	}
-	in_bus(bus[n_buses++]);
-	dfs(index+1, n_buses);
-	out_bus(bus[n_buses]);
-	n_buses--;
+void input_bus(int index_bus, int input_a) {
+  buses[index_bus].as[buses[index_bus].count++] = input_a;
 }
 
-int in_bus(B *bus, int *person) {
-	for (int i = 0; i< bus->count; i++) {
-		int tmp = *person - *bus->person[i];
-		if (tmp < 0) tmp *= -1;
-		if (tmp < k) return 0;
-	}
-  bus->count++;
-  bus->person[bus->count] = person;
-	return 1;
+int chech_bus(int index_bus, int input_a) {
+  for(int i=0; i<buses[index_bus].count; i++) {
+    int tmp = input_a - buses[index_bus].as[i];
+    if (tmp < 0) tmp *= -1;
+    if (tmp <= K) return 0;
+  }
+  return 1;
 }
 
-void out_bus(B* bus) {
-  bus->count--;
+void output_bus(int index_bus) {
+  buses[index_bus].as[--buses[index_bus].count] = 0;
 }
 
-int is_empty(B* bus) {
-  if (bus->count ==0) return 1;
-  return 0;
+void dfs(int index) {
+  if(index == N) {
+    if (n_buses < Answer) Answer = n_buses;
+    return;
+  }
+  for(int i=0; i<n_buses; i++) {
+    if(chech_bus(i, A[index])) {
+      input_bus(i, A[index]);
+      dfs(index+1);
+      output_bus(i);
+    }
+  }
+  buses[n_buses].count = 0;
+  input_bus(n_buses++, A[index]);
+  dfs(index+1);
+  output_bus(--n_buses);
 }
 
 int main(void)
@@ -69,7 +64,7 @@ int main(void)
 	   You may remove the comment symbols(//) in the below statement and use it.
 	   But before submission, you must remove the freopen function or rewrite comment symbols(//).
 	 */
-	freopen("input.txt_1", "r", stdin);
+	freopen("sample_input_1.txt", "r", stdin);
 
 	/*
 	   If you remove the statement below, your program's output may not be rocorded
@@ -81,16 +76,23 @@ int main(void)
 	scanf("%d", &T);
 	for(test_case = 0; test_case < T; test_case++)
 	{
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    /*
+
+		/////////////////////////////////////////////////////////////////////////////////////////////
+		/*
 		   Implement your algorithm here.
 		   The answer to the case will be stored in variable Answer.
 		 */
-		Answer =0;
-		scanf("%d %d", &n, &k);
-		for (int i=0; i<n; i++) scanf("%d", &a[i]);
+    scanf("%d %d", &N, &K);
+    for(int i=0; i<N; i++) scanf("%d", &A[i]);
 
-		/////////////////////////////////////////////////////////////////////////////////////////////
+    Answer = N;
+    n_buses = 1;
+
+    buses[0].count = 0;
+    input_bus(0, A[0]);
+    dfs(1);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
 
         		// Print the answer to standard output(screen).
 
