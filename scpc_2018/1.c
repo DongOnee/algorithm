@@ -1,5 +1,5 @@
 /*
-You should use the statndard input/output
+You should use the standard input/output
 
 in order to receive a score properly.
 
@@ -12,6 +12,7 @@ Please be very careful.
 
 int Answer;
 
+<<<<<<< HEAD
 int N, K;
 int A[200000][2];
 
@@ -86,6 +87,8 @@ void dfs(int index) {
   n_buses--;
 }
 
+=======
+>>>>>>> 092dd80323c7f003ebac8bf5e59dd0d60d7ef361
 int main(void)
 {
 	int T, test_case;
@@ -97,14 +100,14 @@ int main(void)
 	   You may remove the comment symbols(//) in the below statement and use it.
 	   But before submission, you must remove the freopen function or rewrite comment symbols(//).
 	 */
-	freopen("sample_input_1.txt", "r", stdin);
+	// freopen("input.txt", "r", stdin);
 
 	/*
-	   If you remove the statement below, your program's output may not be rocorded
+	   If you remove the statement below, your program's output may not be recorded
 	   when your program is terminated after the time limit.
 	   For safety, please use setbuf(stdout, NULL); statement.
 	 */
-	setbuf(stdout, NULL);
+	//setbuf(stdout, NULL);
 
 	scanf("%d", &T);
 	for(test_case = 0; test_case < T; test_case++)
@@ -115,16 +118,7 @@ int main(void)
 		   Implement your algorithm here.
 		   The answer to the case will be stored in variable Answer.
 		 */
-    scanf("%d %d", &N, &K);
-    for(int i=0; i<N; i++) scanf("%d", &A[i][0]);
-
-    Answer = N;
-    n_buses = 1;
-
-    input_bus(1, 0);
-    dfs(1);
-
-    /////////////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////////////////////////
 
         		// Print the answer to standard output(screen).
 
