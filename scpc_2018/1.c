@@ -17,36 +17,66 @@ int A[200000][2];
 
 int n_buses;
 
-void input_bus(int index_bus, int index_a) {
-  A[index_a][1] = index_bus;
+typedef struct node{
+  int a;
+  struct node* next;
+} n;
+
+typedef struct {
+  int size;
+  n* start;
+  n* end;
+} bus;
+
+void input_bus(bus* b, n* a) {
+  if(b->size == 0) {
+    b->start = a;
+    b->end = a;
+  } else {
+    b->end->next = a;
+    b->end = a;
+  }
+  b->size++;
 }
 
-int chech_bus(int index_bus, int index_a) {
-  for (int i=0; i<index_a; i++) {
-    if (A[i][1] == index_bus) {
-      int tmp = A[i][0] - A[index_a][0];
-      if (tmp < 0) tmp *= -1;
-      if (tmp <= K) return 0;
-    }
+n* output_bus(bus* b) {
+  n* tmp;
+  if (b->size == 1) {
+    tmp = b->end;
+    b->start = NULL;
+    b->end = NULL;
+  } else {
+    tmp = b->start;
+    for (int i=2; i<b->size; i++) tmp = tmp->next;
+    b->end = tmp;
+    tmp = tmp->next;
+    b->end->next = NULL;
+  }
+  b->size--;
+  return tmp;
+}
+
+int check_bus(bus* b, n* a) {
+  n* tmp = b->start;
+  for (int i=0; i<b->size; i++) {
+    int kk = tmp->a - a->a;
+    if (kk < 0) kk *=-1;
+    if (kk <=K) return 0;
   }
   return 1;
-}
-
-void output_bus(int index_a) {
-  A[index_a][1] = 0;
 }
 
 void dfs(int index) {
   if(index == N) {
     if (n_buses < Answer) Answer = n_buses;
-    return;
+    return; 
   }
   if (Answer < n_buses) return;
   for(int i=1; i<=n_buses; i++) {
-    if(chech_bus(i, index)) {
-      input_bus(i, index);
+    if(check_bus(&buses[i], &A[index])) {
+      input_bus(&buses[i], &A[index]);
       dfs(index+1);
-      output_bus(index);
+      output_bus(&buses[i]);
     }
   }
 
