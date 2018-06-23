@@ -11,15 +11,42 @@ Please be very careful.
 #include <stdio.h>
 
 int Answer;
+int n, k;
+int a[200000];
 
 typedef struct Bus {
   int* person[200000];
   int count;
 } B;
 
-void in_bus(B* bus, int* person) {
+B bus[200000];
+
+void dfs(int index, int n_buses) {
+	if (index == n) {
+		if (Answer < n_buses) Answer = n_buses;
+		return;
+	}
+	for (int i=0; i<n_buses; i++) {
+		if (in_bus(&bus[i], a[index])){
+			dfs(index+1, n_buses);
+			out_bus(bus[i]);
+		}
+	}
+	in_bus(bus[n_buses++]);
+	dfs(index+1, n_buses);
+	out_bus(bus[n_buses]);
+	n_buses--;
+}
+
+int in_bus(B *bus, int *person) {
+	for (int i = 0; i< bus->count; i++) {
+		int tmp = *person - *bus->person[i];
+		if (tmp < 0) tmp *= -1;
+		if (tmp < k) return 0;
+	}
   bus->count++;
   bus->person[bus->count] = person;
+	return 1;
 }
 
 void out_bus(B* bus) {
@@ -59,18 +86,9 @@ int main(void)
 		   Implement your algorithm here.
 		   The answer to the case will be stored in variable Answer.
 		 */
-     Answer =0;
-     int n, k;
-     scanf("%d %d", &n, &k);
-     int a[200000];
-     for (int i=0; i<n; i++) scanf("%d", &a[i]);
-
-     for (int i=0; i<n; i++) {
-       for (int j=0; j<n_bus; j++) {
-         in_bus(buses[j], a[i]);
-       }
-     }
-
+		Answer =0;
+		scanf("%d %d", &n, &k);
+		for (int i=0; i<n; i++) scanf("%d", &a[i]);
 
 		/////////////////////////////////////////////////////////////////////////////////////////////
 
