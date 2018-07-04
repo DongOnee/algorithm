@@ -1,24 +1,36 @@
 #include <stdio.h>
 
-int a[101][10]; //a[length][last number]
+int main(int argc, char const *argv[])
+{
+    // input data
+    int n;
 
-int main(void) {
-	int N;
-	scanf("%d", &N);
+    // input 
+    scanf("%d", &n);
 
-	for (int i = 0; i < 10; i++) a[1][i] = 1;
+    // algorithm
+    signed long long d[n+1][10];
+    int sol=10;
+    for (int i=0; i<10; i++)
+    {
+        d[1][i] = 1;
+    }
 
-	for (int i=0; i<=N; i++)
-		for (int j=0; j<10; j++)
-			for(int k=0; k<=j; k++) {
-				a[i][j] += a[i-1][k];
-				a[i][j] %= 10007;
-			}
-	
-	unsigned long ret=0;
-	for (int i = 0; i < 10; i++) ret += a[N][i];
-
-	printf("%lu\n", ret%10007);
-
-	return 0;
+    for (int i=2; i<=n; i++)
+    {
+        d[i][0] = 0;
+        d[i][1] = 1;
+        signed long long tmp = 1;
+        signed long long sum = 1;
+        for (int j=2; j<10; j++)
+        {
+            tmp += d[i-1][j];
+            d[i][j] = tmp;
+            sum += d[i][j];
+            sum %= 10007;
+        }
+        sol = sum;
+    }
+    printf("%d\n", sol);
+    return 0;
 }
