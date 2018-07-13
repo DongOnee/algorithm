@@ -1,67 +1,40 @@
 #include <stdio.h>
 
-void push(int);
-int pop();
-int empty();
-int top();
+int stack[100001];
+int top;
 
-int stack[100000];
-int size;
-
-int main(void) {
-  size=0;
-
-  int N;
-  scanf("%d", &N);
-  int array[N];
-
-  for (int i = 0; i < N; i++) {
-    scanf("%d", &array[i]);
-  }
-
-  int i = 1;
-  int j = 0;
-  while (j < N) {
-    if (top() == array[j]) {
-      pop();
-      j++;
-    }
-    else {
-      if (N < i) {
-        printf("NO\n");
-        break;
-      }
-      push(i);
-      i++;
-    }
-  }
-
-  return 0;
+void push()
+{
+    static int input=1;
+    top++;
+    stack[top] = input;
+    input++;
+    printf("+\n");
 }
 
-void push(int number) {
-  stack[size++] = number;
-  printf("+\n");
-}
-
-int pop() {
-  if (size == 0) {
-    return -1;
-  } else {
+int pop()
+{
+    if (top==0) return -1;
     printf("-\n");
-    return stack[--size];
-  }
+    return stack[top--];
 }
 
-int empty() {
-  if (size == 0)  return 1;
-  else return 0;
-}
+int main(int argc, char const *argv[]) {
+    int n;
+    scanf("%d", &n);
 
-int top() {
-  if (size == 0) {
-    return -1;
-  } else {
-    return stack[size-1];
-  }
+    for(int i=0; i<n; i++)
+    {
+        int tmp;
+        scanf("%d", &tmp);
+
+        while (stack[top] < tmp)
+        {
+            push();
+        }
+        int p = pop();
+
+    }
+    /* code */
+    return 0;
 }
