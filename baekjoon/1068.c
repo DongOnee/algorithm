@@ -21,6 +21,15 @@ void push(int input)
     count++;
 }
 
+void print_d(int n)
+{
+    for (int i=0; i<n; i++)
+    {
+        for (int j=0; j<n; j++) printf("%d", d[i][j]);
+        printf("\n");
+    }
+}
+
 int main(int argc, char const *argv[])
 {
     sol = 0;
@@ -40,12 +49,6 @@ int main(int argc, char const *argv[])
         }
     }
 
-    // for (int i=0; i<51; i++)
-    // {
-    //     for (int j=0; j<51; j++) printf("%d", d[i][j]);
-    //     printf("\n");
-    // }
-
     scanf("%d", &excp);
     if (excp == root)
     {
@@ -59,7 +62,7 @@ int main(int argc, char const *argv[])
     while(count != 0)
     {
         int visit = pop();
-        if (d[visit][0] == 0)
+        if (d[visit][0] == 0 || (d[visit][0] == 1 && d[visit][1] == excp))
         {
             sol++;
             continue;

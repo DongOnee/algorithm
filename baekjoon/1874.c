@@ -2,6 +2,8 @@
 
 int stack[100001];
 int top;
+char ans[200001];
+int ans_top;
 
 void push()
 {
@@ -9,17 +11,20 @@ void push()
     top++;
     stack[top] = input;
     input++;
-    printf("+\n");
+    // printf("+\n");
+    ans[ans_top++] = '+';
 }
 
 int pop()
 {
     if (top==0) return -1;
-    printf("-\n");
+    ans[ans_top++] = '-';
+    // printf("-\n");
     return stack[top--];
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[])
+{
     int n;
     scanf("%d", &n);
 
@@ -33,8 +38,18 @@ int main(int argc, char const *argv[]) {
             push();
         }
         int p = pop();
-
+        if (p != tmp)
+        {
+            printf("NO\n");
+            return 0;
+        }
     }
-    /* code */
+
+    int k = 0;
+    while ((n = ans[k++]) != '\0')
+    {
+        printf("%c\n", n);
+    }
+
     return 0;
 }

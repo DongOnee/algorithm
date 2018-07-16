@@ -1,18 +1,25 @@
+// 무슨 피보나치 수열을 mod 로 나눳을때 반복된다고??
+
 #include <stdio.h>
 
-int main(void) {
-  int N;
-  scanf("%d", &N);
+int main(int argc, char const *argv[])
+{
+    long long n;
+    scanf("%lld", &n);
 
-  long long a = 0;
-  long long b = 1;
-
-  for (int i = 2; i <= N; i++) {
-    long long temp = b;
-    b += a;
-    a = temp;
-  }
-  int result = (int) (b % 1000000);
-  printf("%d\n", result);
-  return 0;
+    int a=0;
+    int b=1;
+    if (n == 0 ) printf("0\n");
+    else if (n == 1 ) printf("1\n");
+    else
+    {
+        for (long long i=1; i<n; i++)
+        {
+            int tmp = b;
+            b = (a+b) % 1000000;
+            a = tmp;
+        }
+        printf("%d\n", b);
+    }
+    return 0;
 }
