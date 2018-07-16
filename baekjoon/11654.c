@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-int main(void) {
-  char c;
-  c=getchar();
-  printf("%d\n",c);
-  return 0;
+int main(int argc, char const *argv[])
+{
+    char input = getchar();
+    printf("%d\n", input);
+    return 0;
 }
