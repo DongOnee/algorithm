@@ -9,6 +9,17 @@
 		"string_view": "c",
 		"utility": "c",
 		"stdio.h": "c",
-		"__tuple": "c"
+		"__tuple": "c",
+		"iostream": "cpp",
+		"algorithm": "cpp",
+		"__config": "cpp",
+		"__nullptr": "cpp",
+		"cstddef": "cpp",
+		"exception": "cpp",
+		"new": "cpp",
+		"stdexcept": "cpp",
+		"type_traits": "cpp",
+		"typeinfo": "cpp",
+		"limits": "cpp"
 	}
 }
