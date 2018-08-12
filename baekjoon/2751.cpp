@@ -1,6 +1,6 @@
 /**
- * MAC Modify~
-*/
+ * COMPUTER2 Modify~~
+ */
 
 
 #include <iostream>
