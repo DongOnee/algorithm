@@ -1,2 +1,6 @@
+# directory
+/.vscode/
+
+# excute file
 a.out
-.vscode/
+.DS_Store

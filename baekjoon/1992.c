@@ -1,47 +1,48 @@
 #include <stdio.h>
 
-void logic(int[65][65], int, int, int);
+int d[64][64];
 
-int A[65][65];
-
-int main(void) {
-  int N;
-  scanf("%d", &N);
-
-  for(int i = 0; i<N; i++) {
-    int temp;
-    scanf("%d", &temp);
-    for(int j = 0; j < N; j++) {
-      A[i][N -1 - j] = (temp % 10);
-      temp /= 10;
+void go(int x, int y, int n)
+{
+    int tmp = d[x][y];
+    int i;
+    if (n != 1) for (i=x; i<x+n; i++) for (int j=y; j<y+n; j++)
+    {
+        if (tmp != d[i][j])
+        {
+            printf("(");
+            go(x, y, n/2);
+            go(x, y+n/2, n/2);
+            go(x+n/2, y, n/2);
+            go(x+n/2, y+n/2, n/2);
+            printf(")");
+            i =65;
+            j= 65;
+        }
     }
-  }
-  logic(A, 0,0,N);
-
-  return 0;
+    if (i !=66) printf("%d", tmp);
 }
 
-void logic(int a[65][65], int x, int y, int size) {
-  int sol = a[x][y];
-  int flag;
-  for (int i = 0; i < size; i++) {
-    flag =0;
-    for (int j = 0; j < size; j++) {
-      if (sol != a[x+i][y+j]) {
-        flag =1;
-        break;
-      }
-    }
-    if (flag) break;
-  }
-  if (!flag) printf("%d", sol);
-  else {
-    printf("(");
-    logic(a, x, y, size/2);
-    logic(a, x, y+size/2, size/2);
-    logic(a, x+size/2, y, size/2);
-    logic(a, x+size/2, y+size/2, size/2);
-    printf(")");
-  }
+int main(int argc, char const *argv[])
+{
+    // data init
+    int n;
+    scanf("%d", &n);
 
+    for (int i=0; i<n; i++)
+    {
+        char tmp[n];
+        scanf("%s", tmp);
+        for (int j=0; j<n; j++)
+        {
+            if (tmp[j] == '0') d[i][j] = 0;
+            else d[i][j]=1;
+        }
+    }
+
+    // algorithm
+    go(0,0,n);
+    puts("");
+
+    return 0;
 }

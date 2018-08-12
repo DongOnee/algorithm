@@ -1,67 +1,55 @@
 #include <stdio.h>
 
-void push(int);
-int pop();
-int empty();
-int top();
+int stack[100001];
+int top;
+char ans[200001];
+int ans_top;
 
-int stack[100000];
-int size;
+void push()
+{
+    static int input=1;
+    top++;
+    stack[top] = input;
+    input++;
+    // printf("+\n");
+    ans[ans_top++] = '+';
+}
 
-int main(void) {
-  size=0;
+int pop()
+{
+    if (top==0) return -1;
+    ans[ans_top++] = '-';
+    // printf("-\n");
+    return stack[top--];
+}
 
-  int N;
-  scanf("%d", &N);
-  int array[N];
+int main(int argc, char const *argv[])
+{
+    int n;
+    scanf("%d", &n);
 
-  for (int i = 0; i < N; i++) {
-    scanf("%d", &array[i]);
-  }
+    for(int i=0; i<n; i++)
+    {
+        int tmp;
+        scanf("%d", &tmp);
 
-  int i = 1;
-  int j = 0;
-  while (j < N) {
-    if (top() == array[j]) {
-      pop();
-      j++;
+        while (stack[top] < tmp)
+        {
+            push();
+        }
+        int p = pop();
+        if (p != tmp)
+        {
+            printf("NO\n");
+            return 0;
+        }
     }
-    else {
-      if (N < i) {
-        printf("NO\n");
-        break;
-      }
-      push(i);
-      i++;
+
+    int k = 0;
+    while ((n = ans[k++]) != '\0')
+    {
+        printf("%c\n", n);
     }
-  }
 
-  return 0;
-}
-
-void push(int number) {
-  stack[size++] = number;
-  printf("+\n");
-}
-
-int pop() {
-  if (size == 0) {
-    return -1;
-  } else {
-    printf("-\n");
-    return stack[--size];
-  }
-}
-
-int empty() {
-  if (size == 0)  return 1;
-  else return 0;
-}
-
-int top() {
-  if (size == 0) {
-    return -1;
-  } else {
-    return stack[size-1];
-  }
+    return 0;
 }

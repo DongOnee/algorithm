@@ -1,55 +1,75 @@
 #include <stdio.h>
 #include <string.h>
 
-char stack[4096];
-int size=0;
+int stack[100001];
+int count;
+int top_c;
 
-int pop();
-int empty();
-int top();
+void push(int input)
+{
+    stack[top_c++] = input;
+    count++;
+}
 
-int main(void) {
+int pop()
+{
+    if (count ==0) return -1;
+    count--;
+    return stack[--top_c];
+}
 
-  int N;
-  scanf("%d", &N);
-  for (int i = 0; i < N; i++) {
-    char c[200];
-    scanf("%s", c);
+int size()
+{
+    return count;
+}
 
-    if (strcmp("push",c) == 0) {
-      int number;
-      scanf("%d", &number);
-      stack[size++]=number;
-    } else if (strcmp("pop", c) == 0) {
-      printf("%d\n", pop());
-    } else if (strcmp("size", c) == 0) {
-      printf("%d\n", size);
-    } else if (strcmp("empty", c) == 0) {
-      printf("%d\n", empty());
-    } else {
-      printf("%d\n", top());
+int empty()
+{
+    if (count == 0) return 1;
+    return 0;
+}
+
+int top()
+{
+    if (count ==0) return -1;
+    return stack[top_c-1];
+}
+
+int main(int argc, char const *argv[])
+{
+    count = 0;
+    top_c = 0;
+
+    int n;
+    scanf("%d", &n);
+    while (n--)
+    {
+        char command[6];
+        scanf("%s", command);
+        if (!strcmp(command, "pop"))
+        {
+            printf("%d\n",pop());
+        }
+        else if(!strcmp(command, "size"))
+        {
+            printf("%d\n", size());
+        }
+        else if(!strcmp(command, "empty"))
+        {
+            printf("%d\n", empty());
+        }
+        else if(!strcmp(command, "top"))
+        {
+            printf("%d\n", top());
+        }
+        else if(!strcmp(command, "push"))
+        {
+            int input;
+            scanf("%d", &input);
+            push(input);
+        }
     }
-  }
-  return 0;
-}
 
-int pop() {
-  if (size == 0) {
-    return -1;
-  } else {
-    return stack[--size];
-  }
-}
-
-int empty() {
-  if (size == 0) return 1;
-  else return 0;
-}
-
-int top() {
-  if (size == 0) {
-    return -1;
-  } else {
-    return stack[size-18];
-  }
+    /* code */
+    return 0;
 }

@@ -1,16 +1,27 @@
 #include <stdio.h>
-#include <string.h>
 
-int main(void) {
-  char c[1000000];
-  gets(c);
-  int i = 0;
-  int count = 1;
-  while (c[i] != '\0') {
-    if(c[i++]==' ') {
-      count++;
+int main(int argc, char const *argv[])
+{
+    int sol = 0;
+    int i=0;
+    int flag;
+    char cur = getchar();
+    if (cur == ' ') flag = 0;
+    else flag = 1;
+    while((cur = getchar()) != '\n')
+    {
+        if (cur == ' ')
+        {
+            if (flag) sol++;
+            flag = 0;
+        }
+        else
+        {
+            flag = 1;
+        }
     }
-  }
-  printf("%d\n", count);
-  return 0;
+    if (flag) sol++;
+
+    printf("%d\n", sol);
+    return 0;
 }

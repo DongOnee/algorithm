@@ -1,8 +1,8 @@
 #include <stdio.h>
 
+
 int main(int argc, char const *argv[])
 {
-    char input = getchar();
-    printf("%d\n", input);
+    printf("84\ndongwon1226\n");
     return 0;
 }

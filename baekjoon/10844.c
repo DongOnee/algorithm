@@ -1,32 +1,29 @@
 #include <stdio.h>
 
-unsigned long a[10] = {0,1,1,1,1,1,1,1,1,1};
+#define MOD 1000000000
 
-int main(void) {
-  int N;
-  scanf("%d", &N);
+long long d[2][10];
 
-  for (int i=1; i < N; i++) {
-    int b[10]={0,};
-    int j=0;
-    while (j<10) {
-      if (j == 0) b[0] = a[1];
-      else if (j == 9) b[9] = a[8];
-      else b[j] = a[j-1] + a[j+1];
-      j++;
+int main(int argc, char const *argv[])
+{
+    d[1][0] = 0;
+    for (int i=1; i<10; i++) d[1][i] = 1;
+    int n;
+    scanf("%d", &n);
+
+    for (int i=2; i<=n; i++)
+    {
+        d[i%2][0] = (d[(i+1)%2][1])%MOD;
+        for (int j=1; j<9; j++) d[i%2][j] = (d[(i+1)%2][j-1] + d[(i+1)%2][j+1])%MOD;
+        d[i%2][9] = (d[(i+1)%2][8])%MOD;
     }
-    for (int i = 0; i < 10; i++) {
-      a[i] = b[i];
+    long long sol=0;
+    for (int i=0; i<10; i++)
+    {
+        sol += d[n%2][i];
+        sol %= MOD;
     }
-  }
-  unsigned long ret=0;
-  for (int i=0; i<10; i++) {
-    ret += a[i];
-  }
-  for (int i=0; i<10; i++) {
-    printf("%d ", a[i]);
-  }
-  printf("\n");
-  printf("%lu\n", ret%1000000000);
-  return 0;
+
+    printf("%lld\n", sol);
+    return 0;
 }

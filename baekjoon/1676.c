@@ -1,21 +1,43 @@
 #include <stdio.h>
 
-int main(void) {
-  int N;
-  scanf("%d", &N);
+typedef struct counts
+{
+    int count_2;
+    int count_5;
+} counts;
 
-  int Nfacto = 1;
-  int i = 1;
-  int count = 0;
-  do {
-    if(Nfacto % 10 == 0) {
-      count++;
-      Nfacto /= 10;
-      continue;
-    } else {
-      Nfacto *= ++i;
+counts d[501];
+
+int main(int argc, char const *argv[]) {
+    int n;
+    scanf("%d", &n);
+
+    counts sol;
+    sol.count_2 = 0;
+    sol.count_5 = 0;
+
+    for (int i=1; i<=n; i++)
+    {
+        if(i%2 == 0)
+        {
+            d[i] = d[i/2];
+            d[i].count_2++;
+        }
+        else if(i%5 == 0)
+        {
+            d[i] = d[i/5];
+            d[i].count_5++;
+        }
+        sol.count_2 += d[i].count_2;
+        sol.count_5 += d[i].count_5;
     }
-  } while (i <= N);
-  printf("%d\n", count);
-  return 0;
+
+    // for(int i =0; i<=n; i++) printf("%d\t%d\n", d[i].count_2, d[i].count_5);
+    // printf("---sol---\n"
+    //         "%d\t%d\n", sol.count_2, sol.count_5);
+
+    if (sol.count_2 < sol.count_5) printf("%d\n", sol.count_2);
+    else printf("%d\n", sol.count_5);
+
+    return 0;
 }
