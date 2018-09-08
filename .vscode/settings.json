@@ -21,6 +21,7 @@
 		"type_traits": "cpp",
 		"typeinfo": "cpp",
 		"limits": "cpp",
-		"iosfwd": "cpp"
+		"iosfwd": "cpp",
+		"locale": "cpp"
 	}
 }
