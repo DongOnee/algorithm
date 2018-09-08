@@ -1,7 +1,9 @@
 #include "Button.hpp"
 #include "ButtonClient.hpp"
 
-void Button::Detect() 
+Button::Button(ButtonClient* bc) : itsClient(bc) {};
+
+void Button::Detect()
 {
     bool ButtonOn = getState();
     if (ButtonOn) itsClient->TurnOn();

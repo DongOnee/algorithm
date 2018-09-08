@@ -3,13 +3,12 @@
 
 class ButtonClient;
 
-class Button
-{
-    private:
+class Button {
+private:
     ButtonClient* itsClient;
 
-    public:
-    Button(ButtonClient* bc) : itsClient(bc) {};
+public:
+    Button(ButtonClient*);
     void Detect();
     virtual bool getState() = 0;
 };
