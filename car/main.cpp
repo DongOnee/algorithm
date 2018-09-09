@@ -2,4 +2,19 @@
 #include "suv.hpp"
 #include "motorcycle.hpp"
 
-int main(int argc, char* argv[]) { Car* myCar = new Car(4,10000); Car usedCar = *myCar; std::cout << usedCar << std::endl; delete myCar; return 0; }
+int main(int argc, char* argv[]) 
+{
+    SUV* newSUV = new SUV();
+
+    newSUV->setWheels(4);
+    std::cout << "The wheels are " << newSUV->getWheels() << std::endl;
+
+    Car* motorcycle = new Motorcycle();
+    motorcycle->setWheels(2);
+    std::cout << "The wheels are " << motorcycle->getWheels() << std::endl;
+
+    delete newSUV;
+    delete motorcycle;
+ 
+    return 0;
+}

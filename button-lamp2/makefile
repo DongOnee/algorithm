@@ -1,12 +1,14 @@
 a.out : main.o
 	g++ main.o
-	rm *.o
 
-main.o : main.cpp
-	g++ -c main.cpp
+main.o : main.cpp lamp.o ButtonImp.o Button.o
+	g++ -c main.cpp lamp.o ButtonImp.o Button.o
 
-lamp.o : lamp.cpp lamp.hpp
-	g++ -c lamp.cpp lamp.hpp
+lamp.o : lamp.cpp lamp.hpp ButtonClient.hpp
+	g++ -c lamp.cpp
 
-ButtonImplementation.o : ButtonImplementation.cpp ButtonImplementation.hpp
-	g++ -c ButtonImplementation.cpp ButtonImplementation.hpp
+ButtonImp.o : ButtonImp.cpp ButtonImp.hpp Button.o
+	g++ -c ButtonImp.cpp Button.o
+
+Button.o : Button.cpp Button.hpp
+	g++ -c Button.cpp

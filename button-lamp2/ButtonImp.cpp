@@ -2,15 +2,12 @@
 #include <iostream>
 using namespace std;
 
-ButtonImplementation::ButtonImplementation(ButtonClient* bc)
-{
-    cout << "TEst";
-}
+ButtonImplementation::ButtonImplementation(ButtonClient* bc) : Button(bc) {};
 
 bool ButtonImplementation::getState()
 {
     int tmp;
     cin >> tmp;
     if (tmp ==1) return true;
-    else false;
+    else return false;
 }

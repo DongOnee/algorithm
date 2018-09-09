@@ -2,7 +2,8 @@
 
 class lamp : public ButtonClient
 {
-    public:
+public:
     virtual void TurnOn();
     virtual void TurnOff();
+    lamp() {};
 };

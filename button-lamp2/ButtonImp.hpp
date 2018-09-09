@@ -2,7 +2,7 @@
 
 class ButtonImplementation : public Button
 {
-    public:
+public:
     ButtonImplementation(ButtonClient*);
     virtual bool getState();
 };
