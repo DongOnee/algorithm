@@ -1,5 +1,6 @@
 # directory
-/.vscode/
+.vscode/
+settings.json
 
 # excute file
 a.out

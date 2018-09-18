@@ -23,5 +23,6 @@
 		"limits": "cpp",
 		"iosfwd": "cpp",
 		"locale": "cpp"
-	}
+	},
+	"C_Cpp.errorSquiggles": "Disabled"
 }

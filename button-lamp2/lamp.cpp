@@ -2,6 +2,8 @@
 #include <iostream>
 using namespace std;
 
+lamp::lamp() {};
+
 void lamp::TurnOn()
 {
     cout << "Turn ON" << endl;

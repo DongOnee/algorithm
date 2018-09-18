@@ -3,8 +3,7 @@
 
 int main(void)
 {
-    lamp l;
-    // ButtonImplementation btn;
-    // ButtonImplementation* btn = new ButtonImplementation(&l);
-    // while(1) btn->Detect();
+    ButtonClient* l = new lamp();
+    ButtonImplementation* btn = new ButtonImplementation(l);
+    while(1) btn->Detect();
 }
