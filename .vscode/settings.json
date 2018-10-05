@@ -34,7 +34,8 @@
 		"sstream": "cpp",
 		"streambuf": "cpp",
 		"tuple": "cpp",
-		"cmath": "cpp"
+		"cmath": "cpp",
+		"queue": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "Disabled"
 }
