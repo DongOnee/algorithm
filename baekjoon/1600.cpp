@@ -1,54 +1,63 @@
-#include <cstdio>
 #include <iostream>
-#include <queue>
+#include <cstdio>
 #include <utility>
+#include <queue>
 using namespace std;
 
-int** map;
-int** visited;
-int chance;
-int height, width;
+int **map, **visited;
+int maxChance, height, width;
 int dir[4][2] = { {0, 1}, {0, -1}, {1, 0}, {-1, 0} };
 int dir_horse[8][2] = { {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {-2, 1}, {2, 1}, {-2, -1}, {2, -1} };
 
-queue<pair<pair<int, int>, int> > q;
+typedef struct node {
+    pair<int, int> point;
+    int countChance;
+}N;
 
-bool chk(int x, int y) {return 0<=x && x<height && 0<=y && y<width;}
+queue<N> q;
 
-void bfs(int x, int y, int chn, int count) {
-    int _x = x;
-    int _y = y;
-    int _chance = chn;
+bool chk(int row, int col) {return 0<=row && row<height && 0<=col && col<width;}
+
+void bfs(int row, int col, int chance) {
+    int _row = row;
+    int _col = col;
+    int _chance = chance;
 
     for (int i=0; i<4; i++)
     {
-        int _xx = _x + dir[i][0];
-        int _yy = _y + dir[i][1];
-        if (!chk(_xx, _yy)) continue;
-        if (map[_xx][_yy] == 1 || visited[_xx][_yy] == 1) continue;
-        
-        q.push(make_pair(make_pair(_xx, _yy), _chance));
-        visited[_xx][_yy] = 1;
+        int new_row = _row + dir[i][0];
+        int new_col = _col + dir[i][1];
+        if (!chk(new_row, new_col)) continue;
+        if (map[new_row][new_col] == 1) continue;
+
+        if (visited[new_row][new_col] < _chance)
+        {
+            N tmp={make_pair(new_row, new_col), _chance};
+            q.push(tmp);
+            visited[new_row][new_col] = _chance;
+        }
     }
 
-    _chance--;
-    for (int i=0; i<8 && 0<=_chance; i++)
+    if (_chance-- == 0) return;
+
+    for (int i=0; i<8; i++)
     {
-        int _xx = _x + dir_horse[i][0];
-        int _yy = _y + dir_horse[i][1];
-        if (!chk(_xx, _yy)) continue;
-        if (map[_xx][_yy] == 1 || visited[_xx][_yy] != 0) continue;
-        
-        q.push(make_pair(make_pair(_xx, _yy), _chance));
-        visited[_xx][_yy] = 2;
+        int new_row = _row + dir_horse[i][0];
+        int new_col = _col + dir_horse[i][1];
+        if (!chk(new_row, new_col)) continue;
+        if (map[new_row][new_col] == 1) continue;
+
+        if (visited[new_row][new_col] < _chance)
+        {
+            N tmp={make_pair(new_row, new_col), _chance};
+            q.push(tmp);
+            visited[new_row][new_col] = _chance;
+        }
     }
 }
 
-int main(int argc, char const *argv[])
-{
-    cin >> chance;
-    cin >> width;
-    cin >> height;
+int main(void) {
+    cin >> maxChance >> width >> height;
 
     map = new int*[height];
     visited = new int*[height];
@@ -59,38 +68,47 @@ int main(int argc, char const *argv[])
         for (int col=0; col<width; col++)
         {
             cin >> map[row][col];
-            visited[row][col] = 0;
+            visited[row][col] = -1;
         }
     }
 
-    q.push(make_pair(make_pair(0, 0), chance));
-    visited[0][0] = 1;
+    N init = {make_pair(0, 0), maxChance};
+    visited[0][0] = maxChance;
+    q.push(init);
+    int ret = 0;
     bool isRun = true;
-    int ret = -1;
     while(!q.empty() && isRun)
     {
-        ret++;
         int qs = q.size();
         while(qs--)
         {
-            int x = q.front().first.first;
-            int y = q.front().first.second;
-            int chn = q.front().second;
+            int row = q.front().point.first;
+            int col = q.front().point.second;
+            int chance = q.front().countChance;
             q.pop();
-            if (x==height-1 && y==width-1)
+
+            if (row == height-1 && col == width -1)
             {
                 isRun = false;
                 break;
             }
-            bfs(x, y, chn, ret);
+            bfs(row, col, chance);
         }
+        if (isRun) ret++;
     }
-    if (visited[height-1][width-1] == 0 ) 
-    {
-        if (width == 1 && height == 1) printf("0\n");
-        else printf("-1\n");
-    }
+
+    if (visited[height-1][width-1] == -1) printf("-1\n");
     else printf("%d\n", ret);
 
     return 0;
 }
+
+/*
+1
+5 5
+0 0 0 0 0
+1 1 1 1 0
+1 0 0 0 0
+1 1 1 1 1
+1 1 0 0 0
+*/
