@@ -3,14 +3,8 @@
 using namespace std;
 
 int main(void) {
-    string a, b;
-    cin >> a;
-    cin >> b;
-
-    int **map, ptr;
-
-    cout << map << endl;
-    cout << ptr << endl;
-
+    int map[10][10]= {};
+    int **ptr = &map[0][0];
+    
     return 0;
 }
