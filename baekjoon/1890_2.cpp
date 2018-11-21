@@ -1,43 +1,40 @@
 #include <cstdio>
-#include <queue>
-#include <utility>
 using namespace std;
 
-int **map;
-int **d;
+int** map;
+long** dp;
 int size;
-int dir[2][2] = { {1, 0}, {0, 1} };
-
-queue<pair<int, int>> q;
-
-bool chk(int row, int col) { return 0<=row && row<size && 0<=col && col<size; }
-
-void bfs(int row, int col) {
-
-}
-
-void dp() {
-
-}
 
 int main(int argc, char const *argv[])
 {
     scanf("%d", &size);
     map = new int*[size];
-    d = new int*[size];
-    for (int i=0; i<size; i++)
+    dp = new long*[size];
+    for (int row=0; row<size; row++)
     {
-        map[i] = new int[size];
-        d[i] = new int[size];
-        for (int j=0; j<size; j++)
+        map[row] = new int[size];
+        dp[row] = new long[size];
+        for (int col=0; col<size; col++)
         {
-            scanf("%d", &map[i][j]);
-            d[i][j] = 0;
+            scanf("%d", &map[row][col]);
+            dp[row][col] =0;
         }
     }
+    dp[0][0] = 1;
 
-    dp();
+    for (int row=0; row<size; row++)
+    {
+        for (int col=0; col<size; col++)
+        {
+            if (dp[row][col] == 0 || (row == size-1 && col == size-1)) continue;
+            int dist = map[row][col];
+            int r = col + dist;
+            int d = row + dist;
+            if (r < size) dp[row][r] += dp[row][col];
+            if (d < size) dp[d][col] += dp[row][col];
+        }
+    }
+    printf("%ld\n", dp[size-1][size-1]);
 
-    printf("%d\n", d[0][0]);
     return 0;
 }
