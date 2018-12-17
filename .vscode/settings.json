@@ -37,7 +37,8 @@
 		"cmath": "cpp",
 		"queue": "cpp",
 		"cstdio": "cpp",
-		"ratio": "cpp"
+		"ratio": "cpp",
+		"vector": "cpp"
 	},
 	"C_Cpp.errorSquiggles": "Disabled"
 }
