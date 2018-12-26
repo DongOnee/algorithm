@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
+#include <math.h>
 using namespace std;
 
 int main(void) {
-    int map[10][10]= {};
-    int **ptr = &map[0][0];
-    
-    return 0;
+	printf("%d\n", -3%2);
+
+	return 0;
 }
