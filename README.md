@@ -2,6 +2,46 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다.
 
+## 19.1.2. 수요일
+1. BOJ 1931
+- Algorithm : greedy algorithm
+- 잡담
+sort 하는 기존을 다르게 생각해보면 되게 빠른 시간에 해답을 추출 해 낼 수 있다. 처음에는 회의 시작시간을 기준으로 sort를 하였는데 참고 자료를 찾아보니 회의 종료 시간을 기준으로 sort를 하면 greedy Algorithm 을 쉽게 돌려서 해답을 찾을 수 있다.
+- Ref. http://red-pulse.tistory.com/94
+
+## 18.12.30. 일요일
+1. BOJ 11047
+- Algorithm : greedy algorithm (쉬움)
+
+## 18.12.30. 일요일
+1. BOJ 10773
+- Algorithm : stack (쉬움)
+
+## 18.12.30. 일요일
+1. BOJ 9020
+- Algorithm : 소수찾기 (쉬움)
+
+## 18.12.30. 일요일
+1. BOJ 9020
+- Algorithm : 소수찾기 (에라토스테네스의 체)
+
+## 18.12.29. 토요일
+1. BOJ 2960
+- Algorithm : 소수찾기 (에라토스테네스의 체)
+
+## 18.12.29. 토요일
+1. BOJ 4948
+- Algorithm : 소수찾기
+
+## 18.12.29. 토요일
+1. BOJ 11650
+- Algorithm : Sorting...
+- Ref. https://dongyeollee.github.io/2018/03/04/Al/11650/
+- Ref. https://www.acmicpc.net/blog/view/22
+- 잡담
+흠흠.. x 좌표를 비교하고~ y 좌표를 비교해서 두번 하려고 했었는데? STL 을 이용하면 쉽지 않을까 해서 찾아보았떠니 역시나 STL 짱
+
+
 ## 18.12.21. 금요일
 1. BOJ 1181
 - Algorithm : Linked list 를 만들었다. 좀 머리 쓰긴 했는데 STL 을 사용하는 방법을 익혀볼까 했는데 필요 없을듯 싶다. 
