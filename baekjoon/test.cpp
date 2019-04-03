@@ -1,10 +1,19 @@
 #include <iostream>
-#include <string>
-#include <math.h>
 using namespace std;
 
-int main(void) {
-	printf("%d\n", -3%2);
-
-	return 0;
+long long calc() {
+    int tmps = 100000;
+    long long max_ = 1000000000;
+    // printf("%lld", tmps * max_);
+    long long rets = tmps * max_;
+    // return rets;
+    return tmps * max_;
 }
+
+int main(void) {
+    int tmps = 100000;
+    int max_ = 1000000000;
+    printf("%lld\n", tmps * max_);
+    printf("%lld\n", calc());
+}
+
