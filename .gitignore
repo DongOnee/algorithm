@@ -1,7 +1,6 @@
 # directory
-# .vscode
-tmp
+.vscode
 
 # excute file
 a.out
-.DS_Store
+#.DS_Store
