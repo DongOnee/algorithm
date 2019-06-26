@@ -2,12 +2,42 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다.
 
+## 19.6.26.
+1. BOJ 13199
+    - Algorithm : 수학
+    - challenge.
+        1. 반복문을 이용해서 쿠폰을 이용한 치킨 구매와 남은 쿠폰 갯수를 업데이트 하는 방식을 이용해보았는데 시간초과가 떳다.
+        2. 점화식을 만들어서 풀어보려고 노력하였다.
+            - <img src="https://latex.codecogs.com/gif.latex?R_n=f*A_n+B_n " /> 
+            - <img src="https://latex.codecogs.com/gif.latex?R_{n+1}=c*A_n+B_n " /> 
+            - <img src="https://latex.codecogs.com/gif.latex?R_n-R_{n+1}=(f-c) *A_n " />
+            - <img src="https://latex.codecogs.com/gif.latex?A_k+...+A_1 = {R_1-R_{k+1} \over {f-c}}" />
+            - 문제는 <img src="https://latex.codecogs.com/gif.latex?R_{k+1}" /> 을 도저히 구할 수 없었다.
+        3. 결국 코드 봤는데 한번에 이해가 안되고 곰곰히 생각끝에 해내었다.
+            - remain_coupon 을 한번에 최대한 많이 사용하여 치킨을 시켜먹지말고 1 치킨씩 구매해서 먹는다고 생각해보자
+            - remain_coupon 중 f 개의 쿠폰을 이용하여 치킨을 한마리 시켜먹으면 remain_coupon -f 개의 쿠폰이 남고 c 개의 쿠폰을 얻을 수 있다.
+            - 결국 remain_coupon -f + c 개의 쿠폰이 남는다. 같은 방식으로 진행하면 몇번을 이용할 수 있을까?
+            - 최소 쿠폰이 f 개 있어야되니까 `if (remain_coupon <= f)`
+            - rc , rc-f , rc-2f , rc-3f , ... 일때 총 rc/(f-c) +1 개가 나온다
+            - 그 중 f 보다 작은 값의 갯수는 f/(f-c) 개가 있다.
+            - 따라서 (rc-c) / (f- c) 개의 치킨을 더 먹을 수 있다.
+    - Talk. : 수학문제 매우 하드한 문제인거 같다. 즐겨찾기 추가했다.
+
+## 19.6.26.
+1. BOJ 1504
+    - Algorithm : DP
+    - challenge.
+        1. 맨 처음에 문제 잘못 이해해서 ㅋㅋㅋㅋㅋㅋ `point[0]`번 정점부터 `point[1]`번 정점까지 가는건줄 알고 잘못 계산 하였다.
+        2. BFS 으로 풀어보려고 하였는데 `point[0]`, `point[1]` 을 지났다는 것을 저장히가 벅차다는 생각이 들어서 포기하였다.
+        3. 디피 최고
+    - Talk. : 상태를 저장하는것중 가장 좋은 방법이 디피인듯 싶다. 이번문제는 정말 오래 걸렸는데 결국 스스로 생각해서 풀었다. 이 문제를 풀고 깨달은 것은 앞서 말한것과 내가 DP를 알고 있지 않았으면 못풀었을 문제라는 점이다. 다양한 알고리즘들을 공부해보자
+
 ## 19.6.24.
 1. BOJ 1655
     - Algorithm : 힙
     - challenge.
-      1. single priority queue 이용해서 push 할때마다 자동 정렬이 이루어 지고 정렬된 자료형에서 중간값(pq[i/2]를 이용해서) 을 출력할 수 있을거라 생각했는데 queue 특성상 random access가 안되서 문제가 되었다. 구글에 검색해봤는데 불가능 하다고하네
-      2. vector 를 이용해서 이진트리를 만들어서 root 를 기준으로 좌측은 작은것 우측은 큰것으로 하려고 했다. 근데.. 아무튼 안됫다.
+        1. single priority queue 이용해서 push 할때마다 자동 정렬이 이루어 지고 정렬된 자료형에서 중간값(pq[i/2]를 이용해서) 을 출력할 수 있을거라 생각했는데 queue 특성상 random access가 안되서 문제가 되었다. 구글에 검색해봤는데 불가능 하다고하네
+        2. vector 를 이용해서 이진트리를 만들어서 root 를 기준으로 좌측은 작은것 우측은 큰것으로 하려고 했다. 근데.. 아무튼 안됫다.
 
 ## 19.6.19.
 1. BOJ 2512

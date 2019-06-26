@@ -1,42 +1,16 @@
 /**
- * 2019.10.27. 22:27 ~
+ * 2019.10.25. 22:27 ~ 2019.10.26. 11:05
  */
 #include <cstdio>
 #include <queue>
 #include <vector>
 using namespace std;
 
-int n, e, map[801][801];
-int visited[801];
-vector<int> vt[801];
-
-int calc_dist(int start, int end)
-{
-    if (start == end) return 0;
-    priority_queue<pair<int, int>> pq;
-    int visite[801] = {-1, };
-    visite[start] = 0;
-    pq.push({0, start});
-    while(!pq.empty())
-    {
-        pair<int, int> tp = pq.top(); pq.pop();
-        if (visite[tp.second] == -1 ) visite[tp.second] = tp.first;
-        else
-        {
-            if (visite[tp.second] <= tp.first) continue;
-            else
-            {
-                visite[tp.second] = tp.first;
-                for (int k : vt[tp.second])
-                {
-                    if (k == end) return tp.first+map[k][tp.second];
-                    pq.push({tp.first + map[k][tp.second], k});
-                }
-            }
-        }
-    }
-    return -1;
-}
+int n, e, map[801][801], point[2];
+vector<int> linked[801];
+int dp[4][801]; // dp[a][b] : a condition 에 있고, b번 정점에 서 출발하여 n 번 정점에 가는 경로의 길이
+// a = 0 : 아무것도 안지남, a = 1 : point[0] 만 지남, a = 2 : point[1] 만 지남, a = 3 : 둘다 지남.
+queue<pair<int, int>> qu;
  
 int main(int argc, char const *argv[])
 {
@@ -46,101 +20,42 @@ int main(int argc, char const *argv[])
         scanf("%d %d %d", &a, &b, &c);
         map[a][b] = c;
         map[b][a] = c;
-        vt[a].push_back(b);
-        vt[b].push_back(a);
+        linked[a].push_back(b);
+        linked[b].push_back(a);
     }
+    scanf("%d %d", point, point+1);
 
-    int point[2]; scanf("%d %d", point, point+1);
+    int first_condition;
+    if (n == point[0]) first_condition = 1;
+    else if (n == point[1]) first_condition = 2;
+    else first_condition = 0;
 
-    int dir[5] = { -1, };
-    // 1 ~ point[0]
-    priority_queue<pair<int, int>> pq;
-    pq.push({0, 1});
-    while(!pq.empty())
+    qu.push({first_condition, n});
+    while (!qu.empty())
     {
-        pair<int, int> tp = pq.top(); pq.pop();
-        if (tp.second == point[0])
+        int cond = qu.front().first;
+        int start = qu.front().second;
+        qu.pop();
+        for (int new_start : linked[start])
         {
-            dir[0] = tp.first;
-            priority_queue<pair<int, int>> empty_pq;
-            swap(pq, empty_pq);
-        }
-        else
-        {
-            for (int dest : vt[tp.second]) pq.push({tp.first+map[dest][tp.second], dest});
-        }
-    }
-    
-    // 1 ~ point[1]
-    pq.push({0, 1});
-    while(!pq.empty())
-    {
-        pair<int, int> tp = pq.top(); pq.pop();
-        if (tp.second == point[1])
-        {
-            dir[1] = tp.first;
-            priority_queue<pair<int, int>> empty_pq;
-            swap(pq, empty_pq);
-        }
-        else
-        {
-            for (int dest : vt[tp.second]) pq.push({tp.first+map[dest][tp.second], dest});
-        }
-    }
+            int new_cond = cond;
+            if (cond == 0)
+            {
+                if (new_start == point[0]) new_cond = 1;
+                else if (new_start == point[1]) new_cond = 2;
+            }
+            else if (cond == 1 && new_start == point[1]) new_cond = 3;
+            else if (cond == 2 && new_start == point[0]) new_cond = 3;
 
-    // n ~ point[0]
-    pq.push({0, n});
-    while(!pq.empty())
-    {
-        pair<int, int> tp = pq.top(); pq.pop();
-        if (tp.second == point[0])
-        {
-            dir[2] = tp.first;
-            priority_queue<pair<int, int>> empty_pq;
-            swap(pq, empty_pq);
-        }
-        else
-        {
-            for (int dest : vt[tp.second]) pq.push({tp.first+map[dest][tp.second], dest});
+            if (dp[new_cond][new_start] == 0 || dp[new_cond][new_start] > dp[cond][start] + map[new_start][start])
+            {
+                dp[new_cond][new_start] = dp[cond][start] + map[new_start][start];
+                qu.push({new_cond, new_start});
+            }
         }
     }
     
-    // n ~ point[1]
-    pq.push({0, n});
-    while(!pq.empty())
-    {
-        pair<int, int> tp = pq.top(); pq.pop();
-        if (tp.second == point[1])
-        {
-            dir[3] = tp.first;
-            priority_queue<pair<int, int>> empty_pq;
-            swap(pq, empty_pq);
-        }
-        else
-        {
-            for (int dest : vt[tp.second]) pq.push({tp.first+map[dest][tp.second], dest});
-        }
-    }
-    
-    // point[0] ~ point[1]
-    pq.push({0, point[0]});
-    while(!pq.empty())
-    {
-        pair<int, int> tp = pq.top(); pq.pop();
-        if (tp.second == point[1])
-        {
-            dir[4] = tp.first;
-            priority_queue<pair<int, int>> empty_pq;
-            swap(pq, empty_pq);
-        }
-        else
-        {
-            for (int dest : vt[tp.second]) pq.push({tp.first+map[dest][tp.second], dest});
-        }
-    }
-    
-    dir[4] += min( (dir[0] !=-1 && dir[3] != -1 ? dir[0] + dir[3] : 987654321) , (dir[1] !=-1 && dir[2] != -1 ? dir[1] + dir[2] : 987654321));
-    printf("%d\n", (dir[4] > 987654321 ? -1 : dir[4]));
+    printf("%d\n", (dp[3][1] == 0 ? -1: dp[3][1]));
 
     return 0;
 }

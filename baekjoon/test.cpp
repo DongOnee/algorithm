@@ -5,10 +5,10 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    vector<int> tmp(4, 5);
-
-    
-    for (int i=0; i<4; i++) printf("%d ", tmp[i]);
+    printf("%d\n", 5/2);
+    printf("%d\n", 5/2*4);
+    printf("%d\n", 5/2*4 + 7);
+    printf("%d\n", 5/2*4 + 7%2);
 
     return 0;
 }
