@@ -4,3 +4,6 @@
 # excute file
 a.out
 #.DS_Store
+output
+input
+test.cpp
