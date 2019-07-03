@@ -2,8 +2,13 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다.
 
+## 19.7.3.
+1. SWEA 7812
+    - Algorithm : Queue
+    - Talk. : difficult 5 는 쉽다.
+
 ## 19.7.1. ~ 3.
-1. SWEA
+1. SWEA 7905
     - Algorithm : Divide & Conquer, Floyd - Warshall.
     - Challenge.
         1. Only Floyd - Warshall 을 사용했는데 메모리 초과가 뜬다. 확인해보니 어마어마어마하게 많은 메모리를 차지한다. mmap 설정을 int[10000][3][10000][3] 으로 잡았는데 계산해보면 무튼 엄청 크다. 7,031,776 kb 차지 한다. ㅋㅋㅋㅋㅋ. 그래서 그런지 런타임에러가 난다.
