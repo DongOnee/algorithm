@@ -15,20 +15,20 @@ typedef struct edge
     int prev;
 }edge;
 
-queue<int> qu[2];
-edge edges[2][MAXM];
+queue<int> qu;
+bool inQu[MAXN];
 int ends[2][MAXN], dst[2][MAXN];
-bool is_qu[MAXN];
+edge edges[2][MAXM];
 
 void spfa(int start_, int category_) // SPFA(Shortest Path Faster Algorithm)
 {
-    qu[category_].push(start_);
-    is_qu[start_] = true;
+    qu.push(start_);
+    inQu[start_] = true;
     dst[category_][start_] = 0;
-    while (!qu[category_].empty())
+    while (!qu.empty())
     {
-        int current_point = qu[category_].front(); qu[category_].pop();
-        is_qu[current_point] = false;
+        int current_point = qu.front(); qu.pop();
+        inQu[current_point] = false;
         for (int next_point = ends[category_][current_point]; next_point; next_point = edges[category_][next_point].prev)
         {
             int end_point = edges[category_][next_point].y;
@@ -36,10 +36,10 @@ void spfa(int start_, int category_) // SPFA(Shortest Path Faster Algorithm)
             if (dst[category_][end_point] > cost + dst[category_][current_point])
             {
                 dst[category_][end_point] = cost + dst[category_][current_point];
-                if (!is_qu[end_point]) 
+                if (!inQu[end_point]) 
                 {
-                    is_qu[end_point] = true;
-                    qu[category_].push(end_point);
+                    inQu[end_point] = true;
+                    qu.push(end_point);
                 }
             }
         }
@@ -48,13 +48,12 @@ void spfa(int start_, int category_) // SPFA(Shortest Path Faster Algorithm)
 
 int main(int argc, char const *argv[])
 {
-    freopen("input_1795.txt", "r", stdin);
+    // freopen("input_1795.txt", "r", stdin);
     int w; scanf("%d", &w);
     for(int tc=1, n, m, x; tc<=w; tc++)
     {
         int ans = 0;
         scanf("%d%d%d", &n, &m, &x);
-        queue<int> empty_qu[2]; swap(qu[0], empty_qu[0]); swap(qu[1], empty_qu[1]);
         for (int i=1; i<=n; i++)
         {
             for (int j=0; j<2; j++)
@@ -62,7 +61,7 @@ int main(int argc, char const *argv[])
                 ends[j][i] = 0;
                 dst[j][i] = INF;
             }
-            is_qu[i] = false;
+            inQu[i] = false;
         }
         for (int i=1, a, b, c; i<=m; i++)
         {
