@@ -2,8 +2,12 @@
  * 2019.07.11. 08:11 ~
  */
 #include <cstdio>
+#include <vector>
+#include <algorithm>
+using namespace std;
 
 bool map[101][101];
+vector<pair<int, int>> vt;
 
 int costs[4] = {0, 2, 4, 7};
 
@@ -18,6 +22,16 @@ int main(int argc, char const *argv[])
         {
             scanf("%d%d", &r, &c);
             map[r][c] = true;
+            vt.push_back({r+c, c});
+        }
+
+        sort(vt.begin(), vt.end());
+
+        for (auto x : vt)
+        {
+            int row = x.first - x.second;
+            int col = x.second;
+            printf("%d %d\n", row, col);
         }
     }
     return 0;
