@@ -18,6 +18,7 @@ typedef struct optimal_return
 int map[MAXS][MAXS], cnt, ans[MAXN][3];
 int costs[4] = {0, 2, 4, 7};
 int s, n;
+vector<opt_ret> vt;
 
 bool chk(int row, int col) { return 0<row&&row<=s&&0<col&&col<=s; }
 
@@ -70,7 +71,7 @@ void set_values(int row, int col, int panel_size, int before, int after)
 
 int solve(int row, int col, int panel_size, bool isFirst)
 {
-    int sum_cost=0;
+    int sum_cost = 0;
     while (panel_size > 1)
     {
         // 전체 map 에서 panel_size 를 이용하였을때 가장 많이 복구되는 곳을 찾는다.
@@ -98,7 +99,29 @@ int solve(int row, int col, int panel_size, bool isFirst)
             cost2 = costs[2];
             set_values(optimals2.row, optimals2.col, 2, 1, 2);
             
+            opt_ret optimals3;
+            do 
+            {
+                optimals3 = optimize(optimals1.row, optimals1.col, 3, 2);
+                if (optimals3.cnt > 1)
+                {
+                    cost2 += costs[2];
+                    set_values(optimals3.row, optimals3.col, 2, 1, 2);
+                }
+            } while (optimals3.cnt > 1);
         }
+
+        cost2 += costs[1] * calc_damaged(optimals1.row, optimals1.col, panel_size);
+        set_values(optimals1.row, optimals1.col, panel_size, 2, 1);
+
+        if (cost1 <= cost2)
+        {
+            set_values(optimals1.row, optimals1.col, panel_size, 1, isFirst ? 3: 4);
+            sum_cost += cost1;
+            if (isFirst) vt.push_back({optimals1.row, optimals1.col, panel_size});
+        }
+        else
+            panel_size--;
     }
 }
 
