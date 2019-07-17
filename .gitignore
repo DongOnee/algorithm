@@ -1,9 +1,10 @@
 # directory
 .vscode
+.DS_Store
+.DS_Store?
 
 # excute file
 a.out
-#.DS_Store
 output*
 input*
 test.cpp
