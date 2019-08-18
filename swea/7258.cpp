@@ -2,37 +2,48 @@
  * 2019.07.29. 21:39 ~
  */
 #include <cstdio>
-#include <cstdlib>
 using namespace std;
 
 char map[21][21];
 bool visit[20][20][16][4];
-int R, C, mem, cur_r, cur_c, cur_dir;
+int R, C;
 int dir[4][2] = { {0, -1}, {0, 1}, {-1, 0}, {1, 0} };
 
 bool dfs(int row, int col, int dirs, int mems)
 {
-    if (map[row][col] == '<') dirs = 0;
-    else if (map[row][col] == '>') dirs = 1;
-    else if (map[row][col] == '^') dirs = 2;
-    else if (map[row][col] == 'v') dirs = 3;
-    else if (map[row][col] == '_') dirs = (mems == 0 ? 1 : 0);
-    else if (map[row][col] == '|') dirs = (mems == 0 ? 3 : 2);
+    int new_dir = dirs;
+    if (map[row][col] == '<') new_dir = 0;
+    else if (map[row][col] == '>') new_dir = 1;
+    else if (map[row][col] == '^') new_dir = 2;
+    else if (map[row][col] == 'v') new_dir = 3;
+    else if (map[row][col] == '_') new_dir = (mems == 0 ? 1 : 0);
+    else if (map[row][col] == '|') new_dir = (mems == 0 ? 3 : 2);
     else if (map[row][col] == '@') return true;
     else if (map[row][col] == '.') ;
     else if (map[row][col] == '+') mems+=1;
     else if (map[row][col] == '-') mems+=15;
-    else if (map[row][col] == '?') for (int i=0; i<4; i++) dfs(row+dir[i][0], col+dir[i][1], i, mems);
-    else mems = map[row][col] - '0';
-    mem %= 16;
+    else if (0 <= map[row][col]-'0' && map[row][col]-'0' < 10) mems = map[row][col] - '0';
+    mems %= 16;
     
-    if (visit[row][col][mems][dirs]) return false;
-    visit[row][col][mems][dirs] = true;
-    
-    cur_r += (dir[cur_dir][0]+R);
-    cur_r %= R;
-    cur_c += (dir[cur_dir][1]+C);
-    cur_c %= C;
+    if (visit[row][col][mems][new_dir]) return false;
+    visit[row][col][mems][new_dir] = true;
+
+    int nrow = row + (dir[new_dir][0]+R);
+    nrow %= R;
+    int ncol = col + (dir[new_dir][1]+C);
+    ncol %= C;
+
+    if (map[row][col] == '?') for (int i=0; i<4; i++)
+    {
+        visit[row][col][mems][i] = true;
+        int nrow = row + (dir[i][0]+R);
+        int ncol = col + (dir[i][1]+C);
+        if(dfs(nrow%R, ncol%C, i, mems)) return true;
+    }
+
+    else return dfs(nrow, ncol, new_dir, mems);
+
+    return false;
 }
 
 int main(int argc, char const *argv[])
@@ -46,38 +57,8 @@ int main(int argc, char const *argv[])
             scanf("%s", map[i]);
             for (int j=0; j<C; j++) for (int k=0; k<16; k++) for(int v=0; v<4; v++) visit[i][j][k][v] = false;
         }
-        cur_r = 0, cur_c = 0, cur_dir = 1;
-
-        bool flag = true;
-        while(1)
-        {
-            if (visit[cur_r][cur_c][mem][cur_dir])
-            {
-                flag = false;
-                break;
-            }
-            visit[cur_r][cur_c][mem][cur_dir] = true;
-            if (map[cur_r][cur_c] == '<') cur_dir = 0;
-            else if (map[cur_r][cur_c] == '>') cur_dir = 1;
-            else if (map[cur_r][cur_c] == '^') cur_dir = 2;
-            else if (map[cur_r][cur_c] == 'v') cur_dir = 3;
-            else if (map[cur_r][cur_c] == '_') cur_dir = (mem == 0 ? 1 : 0);
-            else if (map[cur_r][cur_c] == '|') cur_dir = (mem == 0 ? 3 : 2);
-            else if (map[cur_r][cur_c] == '@') break;
-            else if (map[cur_r][cur_c] == '.') ;
-            else if (map[cur_r][cur_c] == '+') mem+=1;
-            else if (map[cur_r][cur_c] == '-') mem+=15;
-            else if (map[cur_r][cur_c] == '?') cur_dir = (rand() % 4);
-            else mem = map[cur_r][cur_c] - '0';
-            mem %= 16;
-            
-            cur_r += (dir[cur_dir][0]+R);
-            cur_r %= R;
-            cur_c += (dir[cur_dir][1]+C);
-            cur_c %= C;
-        }
-
-        printf("#%d %s\n", tc, flag?"YES":"NO");
+        
+        printf("#%d %s\n", tc, dfs(0, 0, 1, 0)?"YES":"NO");
     }
     return 0;
 }
