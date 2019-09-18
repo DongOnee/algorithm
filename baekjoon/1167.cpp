@@ -1,55 +1,75 @@
-/**
- * 19.2.15.
- */
 #include <cstdio>
 #include <vector>
-#include <utility>
+#include <queue>
 #include <algorithm>
+#define INF 987654321
 using namespace std;
 
-int v;
-vector<pair<int, int>> vt[100001];
-bool visited[100001];
-int max_;
+typedef pair<int,int> pii;
 
-void dfs(int input, int count)
+vector<vector<pii>> map;
+int n, vertex[2];
+
+pii searchVertex(int start = 0)
 {
-    max_ = max(max_, count);
-    for (auto val : vt[input])
+    int ans = 0;
+    int maxValue = 0;
+
+    priority_queue<pii> pq;
+    pq.push({0, start});
+
+    vector<int> dist;
+    vector<bool> visit;
+    dist.assign(n, INF);
+    dist[start] = 0;
+
+    while(!pq.empty())
     {
-        if (visited[val.first]) continue;
-        int new_count = count + val.second;
-        // if (new_count < max_) continue;
-        visited[val.first] = true;
-        dfs(val.first, new_count);
-        visited[val.first] = false;
+        int idxVertex = pq.top().second;
+        int Src2Vertex = -pq.top().first;
+        pq.pop();
+
+        if (Src2Vertex < dist[idxVertex]) continue;
+
+        for (auto x : map[idxVertex])
+        {
+            int idxDest = x.first;
+            int Vertex2Dest = x.second;
+            int Src2Vertex2Dest = Src2Vertex + Vertex2Dest;
+            if (dist[idxDest] <= Src2Vertex2Dest) continue;
+            dist[idxDest] = Src2Vertex2Dest;
+            pq.push({-dist[idxDest], idxDest});
+            if (maxValue < Src2Vertex2Dest)
+            {
+                ans = idxDest;
+                maxValue = Src2Vertex2Dest;
+            }
+        }
     }
+
+    return {ans, maxValue};
 }
 
 int main(int argc, char const *argv[])
 {
-    scanf("%d", &v);
-    
-    for (int i=0, index, a, b; i<v; i++)
+    scanf("%d", &n);
+    map.assign(n, vector<pii>());
+    for (int i=0, vertex; i<n; i++)
     {
-        scanf("%d", &index);
-        while(true)
+        scanf("%d", &vertex);
+        while (1)
         {
-            scanf("%d", &a);
-            if (a==-1) break;
-            scanf("%d", &b);
-            vt[index].push_back(make_pair(a, b));
+            int endVertex; scanf("%d", &endVertex);
+            if (endVertex == -1) break;
+            int edge; scanf("%d", &edge);
+            map[vertex-1].push_back({endVertex-1, edge});
         }
     }
 
-    max_=0;
-    for (int i=1; i<=v; i++)
-    {
-        visited[i] = true;
-        dfs(i, 0);
-        visited[i] = false;
-    }
+    pii ret  = searchVertex();
+    ret = searchVertex(ret.first);
 
-    printf("%d\n", max_);
+    printf("%d\n", ret.second);
+
     return 0;
 }
