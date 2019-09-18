@@ -2,6 +2,12 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다.
 
+## 19.9.18.
+1. BOJ 4963
+    - Algorithm : BFS
+    - Talk. : 간단한 BFS 문제였다. 가로 세로 크기에 대해서 잘못 적용시켜놨어서 한번 틀렸다.
+    - ISSUE : cstdio 랑 string.h 같이 쓰니까 printf 가 ambiguous 한 표현이라고 떳다. string.h 를 csting 으로 고치니까 해결되었다.
+
 ## 19.9.17.
 1. BOJ 16986
     - Algorithm : BFS
