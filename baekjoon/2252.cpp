@@ -1,35 +1,38 @@
 #include <cstdio>
-#include <algorithm>
 #include <vector>
-#include <stack>
-#define MAX_N 32000
+#include <queue>
 using namespace std;
-vector<vector<int>> vt;
-stack<int> st;
-int n, m, x, y, visited[MAX_N + 1];
-void dfs(int v) {
-    visited[v] = true;
-    for (auto i : vt[v]) {
-        if (visited[i])
-            continue;
-        dfs(i);
-    }
-    st.push(v);
-}
-int main() {
+
+typedef pair<int, int> pii;
+
+int n, m;
+int counts[32001];
+vector<int> nexts[32001];
+
+int main(int argc, char const *argv[])
+{
     scanf("%d%d", &n, &m);
-    vt.resize(n + 1);
-    for (int i = 0; i < m; i++) {
-        scanf("%d%d", &x, &y);
-        vt[x].push_back(y);
+
+    for (int i=0, a, b; i<m; i++)
+    {
+        scanf("%d%d", &a, &b);
+        counts[b]++;
+        nexts[a].push_back(b);
     }
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i])
-            dfs(i);
+
+    queue<int> qu;
+    for (int i=1; i<=n; i++) if (counts[i] == 0) qu.push(i);
+
+    while(!qu.empty())
+    {
+        int f = qu.front(); qu.pop();
+        printf("%d ", f);
+
+        if (counts[f] < 1)
+        {
+            for (int next : nexts[f]) if (--counts[next] == 0) qu.push(next);
+        }
     }
-    while (st.size()) {
-        printf("%d ", st.top());
-        st.pop();
-    }
+
     return 0;
 }
