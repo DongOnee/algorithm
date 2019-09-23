@@ -1,36 +1,33 @@
-/**
- * 19.1.1. x
- * 19.1.2.
- */
 #include <cstdio>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-int N;
-pair<int, int> data[100001];
+typedef pair<int, int> pii;
+
+int n, cur, mx;
+vector<pii> datas;
 
 int main(int argc, char const *argv[])
 {
-    scanf("%d", &N);
-    for (int i=0; i<N; i++)
+    scanf("%d", &n);
+    for (int i=0, a, b; i<n; i++)
     {
-        scanf("%d %d", &data[i].second, &data[i].first);
+        scanf("%d %d", &a, &b);
+        datas.push_back({a, b});
     }
 
-    sort(data, data+N);
-    // puts("");
-    // for (int i=0; i<N; i++) printf("%d %d\n", data[i].second, data[i].first);
-    // puts("");
-    int cur=0, mx=0;
-    for (int i=0; i<N; i++)
+    sort(datas.begin(), datas.end());
+    
+    for (pii x : datas)
     {
-        if (cur <= data[i].second)
+        if (cur <= x.second)
         {
-            cur = data[i].first;
+            cur = x.first;
             mx++;
         }
     }
+
     printf("%d\n", mx);
     return 0;
 }
