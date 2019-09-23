@@ -2,6 +2,22 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다.
 
+## 19.9.24.
+1. BOJ 4195
+    - Algorithm : Union-Find
+    - Talk. : **Union-Find** 알고리즘에 대해서 공부해야겠다라는 생각이 있었는데 이번 문제를 통해서 조금은 알게 되었다. 개념 설명은 나중에 시간 내서 해야겠다. 다이어리에 날짜를 잡고 GitHub에 Algorithm repository 에 WIKI 에 올려야겠다.
+    - ISSUE
+        - fail/4195.cpp 파일을 보면 큐를 이용하여 BFS 알고리즘을 이용한 흔적이 보일것이다. 결과는 당연히 **시간 초과**. 아마도 이전에 했던 작업을 한번더 하기 때문에 완전 탐색 NlogN 시간이 N 만큼 더걸리게 되니 당연히 시간초과가 날것이다. 그래서 방법을 바꾸어 보았다.
+        - 4195.cpp 파일에서 가장큰 차이점은 `idxGroup` 과 `idxConnectedGroup` 을 두었다. 그래서 idx 에 해당하는 친구가 속한 그룹은 `idxGroup[idx]` 이고 idxGrp 에 해당하는 그룹의 부모 그룹은 `idxConnectedGroup[idxGrp]` 이 된다. 
+        ```c++
+        for (int i=0; i<2; i++)
+            if (idxGroup[idxs[i]] != -1)
+                while (idxConnectedGroup[idxGroup[idxs[i]]] != -1) 
+                    idxGroup[idxs[i]] = idxConnectedGroup[idxGroup[idxs[i]]];
+        ```
+        - 30 ~ 33 라인을 보면 `idxConnectedGroup` 을 이용해서 `idxGroup` 을 최상위로 바꾸어 놓는다. 그렇게 하면 속한 그룹을 찾는 과정 (find) 가 쉽게 이뤄진다.
+        - 하지만 계속 해서 틀렸습니다가 나오는데 문제를 찾아보니 사이클이 있으면 오류가 나온다. 코드위 59 번재 줄에 `if (idxGroup[idxs[0]] == idxGroup[idxs[1]]) return cntGroup[idxGroup[idxs[0]]];` 를 추가하여 해결 하였다.
+
 ## 19.9.20.
 1. BOJ 2523
     - Algorithm : 위상정렬
