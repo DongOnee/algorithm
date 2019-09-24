@@ -1,17 +1,19 @@
 /**
  * 19.9.23. 22:23 ~ 24:03
- * Fail
+ * Success
  */
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
+// #include <map>
 #include <string>
 using namespace std;
 
 typedef pair<int, int> pii;
 
 int cntFriends;
-map<string, int> name_idx;
+unordered_map<string, int> name_idx;
+// map<string, int> name_idx;
 vector<int> idxConnectedGroup;
 vector<int> cntGroup;
 vector<int> idxGroup;
