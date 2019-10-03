@@ -2,6 +2,14 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다. 코드에 관한 소통은 얼마든지 환영합니다. 제발요
 
+## 19.10.3.
+1. Kakao Blind Test Problem 1
+    - Algorithm : Brute Force
+    - Talk : String 을 이용해서 길이를 다루는것은 굉장히 편한것 같다. 아직은 char 배열이 더 편해서 char 배열로 푸는게 생각 덜하고 풀 수 있을거 같은데 이번 같은 문제는 string 을 이용해서 풀어야 더 생각을 덜하고 풀 수 있었다. 
+    - ISSUE
+        - 28 line `if (tmp>1) for (; tmp; tmp/=10) ans++;` 에서 이전에는 `if (tmp>1) ans++;` 로해서 틀렸었다. `aaaaaaaaaa` 의 인풋이 들어오면 압축된 string 은 `10a` 가 되므로 길이는 `3` 이 나외야 되는데 `2`가 나오게 되서 틀렸던것 같다. 삽질 오지게 했다.
+    - [풀이 링크](https://tech.kakao.com/2019/10/02/kakao-blind-recruitment-2020-round1/?fbclid=IwAR1V8ut0sSHjPMorc3TSq8ZOS_q64b-zonC10CCgH2dC2tLjVUhCrKmgoGA)
+
 ## 19.10.2.
 1. BOJ 2422
     - Algorithm : Brute Force
