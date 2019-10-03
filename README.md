@@ -3,6 +3,12 @@
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다. 코드에 관한 소통은 얼마든지 환영합니다. 제발요
 
 ## 19.10.3.
+1. Kakao Blind Test Problem 2
+    - Algorithm : 재귀
+    - Talk : EZ
+    - [풀이 링크](https://tech.kakao.com/2019/10/02/kakao-blind-recruitment-2020-round1/?fbclid=IwAR1V8ut0sSHjPMorc3TSq8ZOS_q64b-zonC10CCgH2dC2tLjVUhCrKmgoGA)
+
+## 19.10.3.
 1. Kakao Blind Test Problem 1
     - Algorithm : Brute Force
     - Talk : String 을 이용해서 길이를 다루는것은 굉장히 편한것 같다. 아직은 char 배열이 더 편해서 char 배열로 푸는게 생각 덜하고 풀 수 있을거 같은데 이번 같은 문제는 string 을 이용해서 풀어야 더 생각을 덜하고 풀 수 있었다. 
