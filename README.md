@@ -11,6 +11,10 @@
     - Algorithm : 시뮬레이션
     - Talk : EZ
 
+1. BOJ 1759
+    - Algorithm : DFS
+    - Talk : EZ
+
 ## 19.10.4.
 1. Kakao Blind Test Problem 4
     - Algorithm : 탐색
