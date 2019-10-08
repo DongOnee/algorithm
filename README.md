@@ -2,6 +2,15 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다. 코드에 관한 소통은 얼마든지 환영합니다. 제발요
 
+## 19.10.7.
+1. BOJ 10972 & 10973 & 10974
+    - Algorithm : 순열
+    - Talk. : 순열을 구하는 문제들이다. 다음 순열을 구하는데 꽤 복잡한 과정을 진행하여 코딩(10972.cpp) 하였다. 근데 찾아보니 이미 STL 이 존재 하였다. [prev_permutation](https://en.cppreference.com/w/cpp/algorithm/prev_permutation) 과 [next_permutation](https://en.cppreference.com/w/cpp/algorithm/next_permutation) 두 함수를 이용하여 간단하게 순열을 구 할 수 있었다. 쉽게 문제를 풀긴 하였지만 내부구현이 어떻게 되어있을지 궁금해서 공부하기로 하였다.
+
+1. BOJ 1592
+    - Algorithm : 시뮬레이션
+    - Talk : EZ
+
 ## 19.10.4.
 1. Kakao Blind Test Problem 4
     - Algorithm : 탐색
