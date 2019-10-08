@@ -15,6 +15,10 @@
     - Algorithm : DFS
     - Talk : EZ
 
+1. BOJ 7785
+    - Algorithm : DataStruct
+    - Talk : 이 악물고 map 을 안쓰려고 했다. `list`를 이용해 보려고 했는데 무슨 이유에선지 런타임 에러가 나서 `map`을 쓸까 하다가 검색해보니 `set` 이란걸 알게 되엇다. 자주 map 이랑 같이 언급이 되어 들어는 보았지만 어떻게 사용하고 어디서 사용하는지에 대한 이해는 전혀 없었다. 이번 기회에 조금 알게 되어 공부해볼까 한다. 이진 탐색에 좋은 자료구조라고 한다.
+
 ## 19.10.4.
 1. Kakao Blind Test Problem 4
     - Algorithm : 탐색
