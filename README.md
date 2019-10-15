@@ -20,6 +20,9 @@
 4. BOJ 2161
     - Algorithm : 덱을 이용한문제. EZ
 
+5. BOJ 1926
+    - Algorithm : BFS , EZ of EZ
+
 ## 19.10.14.
 1. BOJ 1406
     - Algorithm : Linked List & Simulation
