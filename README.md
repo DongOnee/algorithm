@@ -23,6 +23,9 @@
 5. BOJ 1926
     - Algorithm : BFS , EZ of EZ
 
+5. BOJ 10808
+    - Algorithm : EZ of EZ
+
 ## 19.10.14.
 1. BOJ 1406
     - Algorithm : Linked List & Simulation
