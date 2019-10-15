@@ -17,6 +17,9 @@
 3. BOJ 9322
     - Algorithm : 인덱싱과 해쉬 함수를 이용하는 문제이다. EZ
 
+4. BOJ 2161
+    - Algorithm : 덱을 이용한문제. EZ
+
 ## 19.10.14.
 1. BOJ 1406
     - Algorithm : Linked List & Simulation
