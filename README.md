@@ -2,6 +2,13 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다. 코드에 관한 소통은 얼마든지 환영합니다. 제발요
 
+## 19.10.17.
+1. BOJ 16637
+    - Algorithm : DP or DFS Simulation
+    - Talk : 문제를 DP 로 풀수도 있고 DFS 로 풀수도 있다. **a<sub>i</sub> : 수식에서 i 번째 문자 (정수, 연산자)** 이라고 하고 **S<sub>i</sub>[0] : 수식에서 i 번째 문자 (연산자) 까지 계산했을때의 최대값, S<sub>i</sub>[1] : 수식에서 i 번째 문자 (연산자) 까지 계산했을때의 최소값** 라고 할때 식을 구할 수 있다.
+    - S<sub>i</sub>[0] = MAX(S<sub>i-2</sub>[0] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-2</sub>[1] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-4</sub>[0] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>), S<sub>i-4</sub>[1] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>))
+    - S<sub>i</sub>[1] = MIN(S<sub>i-2</sub>[0] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-2</sub>[1] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-4</sub>[0] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>), S<sub>i-4</sub>[1] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>))
+
 ## 19.10.15.
 1. BOJ 3653
     - Algorithm : Segment Tree \\ Fenwick Tree
