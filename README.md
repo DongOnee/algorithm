@@ -9,6 +9,10 @@
     - S<sub>i</sub>[0] = MAX(S<sub>i-2</sub>[0] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-2</sub>[1] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-4</sub>[0] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>), S<sub>i-4</sub>[1] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>))
     - S<sub>i</sub>[1] = MIN(S<sub>i-2</sub>[0] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-2</sub>[1] {a<sub>i</sub>} a<sub>i+1</sub>, S<sub>i-4</sub>[0] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>), S<sub>i-4</sub>[1] {a<sub>i-2</sub>} (a<sub>i-1</sub> {a<sub>i</sub>} a<sub>i+1</sub>))
 
+2. BOJ 17281
+    - Algorithm : 순열 Simulation
+    - Talk : 순열로 푸는 문제인데.. 맨처음에 또 어렵게 생각했다가 그냥 구현문제구나 생각이 들었다. 순열 구하는걸 DFS 로 구현한번 해보고 `next_permutation`를 이용해서 풀어보았다. 결과는 300+@ms로 똑같다. 하지만 다른사람 채점 현황보니까 100+@ 라서 굉장히 놀랐다. 최고 성적인거 같은데 소스를 비공개 해놓았다. ㅜㅜㅜㅜㅜ 보고싶다.
+
 ## 19.10.15.
 1. BOJ 3653
     - Algorithm : Segment Tree \\ Fenwick Tree
