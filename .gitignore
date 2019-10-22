@@ -6,5 +6,6 @@
 # excute file
 a.out
 output*
-input*
+*_input*.txt
 test*
+tmp
