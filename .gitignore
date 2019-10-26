@@ -7,5 +7,6 @@
 a.out
 output*
 *_input*.txt
+*_output*.txt
 test*
 tmp
