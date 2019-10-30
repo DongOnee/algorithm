@@ -2,6 +2,51 @@
 
 알고리즘 문제를 풀면서 깨달은 것들을 적어보자. 나중에 코딩테스트를 보러 갈 일이 있다면 한번씩 봐보도록. 다른사람들도 도움이 됬으면 좋겠다. 코드에 관한 소통은 얼마든지 환영합니다. 제발요
 
+## 19.10.30.
+1. SWEA 2477
+    - Algorithm : Simulation
+    - Talk : 시간 굉장히 많이 썻다. 이런문제가 나오면 오랜 시간 걸린다. 문제 읽고 쓰면서 풀이를 시작하고 코딩 하는게 더 좋을거 같다.. 조건 찾는게 어렵다. 굉장히 좋은 문제라고 생각한다.
+    - solv
+        1. 구조체를 만들었다. (9 ~ 15 Line)
+            ```c++
+            typedef struct _info
+            {
+                int idx;
+                int tm;
+                int st; // 0: 접수중 고객   1: 수리중 고객   2: 방문 고객
+                int idx_counter;
+            }client_info;
+            ```
+        2. 이 후 우선순위 큐를 만들어서 위 구조체를 저장하였다. (37 Line)
+            ```c++
+            priority_queue<client_info> pq;
+            ```
+        3. 우선순위 큐에 사용할 비교 함수를 지정해 주었다.(17 ~ 29 Line)
+            ```c++
+            bool operator<(const client_info& a, const client_info& b)
+            {
+                if (a.tm == b.tm)
+                {
+                    if (a.st == b.st)
+                    {
+                        if (a.idx_counter == b.idx_counter) return a.idx > b.idx;
+                        return a.idx_counter > b.idx_counter;
+                    }
+                    return a.st < b.st;
+                }
+                return a.tm > b.tm;
+            }
+            ```
+            시간(tm)이 작을수록, 상태(st)가 클수록, index 가 작을 수록 우선순위를 높게 하였다.
+        4. `init()`를 이용해서 초기화 한다.
+            - 우선순위 큐(pq)에 방문하는 고객들의 시간을 이용하여 구조체를 만들어 넣는다. (60~65 line)
+        5. `simulation()` 을 이용해 시뮬레이션 하였다.
+            1. 우선순위 큐가 빌때까지 진행한다.
+            2. 우선순위 큐에 top 에 해당하는 고객 정보를 가져온다.
+                - 이 고객 정보는 **시간**이 가장 작거나, **진행**이 빠르거나(수리 --> 접수 --> 방문 순으로 진행도가 빠름), **이전 진행했던 창구의 번호**가 작거나, **인덱스**가 가장 작다.
+            3. 종료 상태에 따른 처리를 진행한다.
+            4. 종료에 따른 대기, 창구의 상태가 변화한다. 그에 맞는 처리를 수행한다.
+
 ## 19.10.28.
 1. SWEA 2382
     - Algorithm : Simulation
