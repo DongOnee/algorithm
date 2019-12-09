@@ -2,9 +2,9 @@
 .vscode
 .DS_Store
 .DS_Store?
+executefile
 
 # excute file
-a.out
 output*
 *_input*.txt
 *_output*.txt
