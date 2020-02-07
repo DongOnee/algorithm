@@ -1,36 +1,57 @@
-#include <cstdio>
+#include <iostream>
 #include <vector>
 using namespace std;
 
-int n, m;
-int map[200][200];
-vector<bool> trip;
+#define MAXN 200
+#define MAXN_PLUS_1 201
+#define MAXM 1000
+
+int n, m, board[MAXN_PLUS_1][MAXN_PLUS_1], group[MAXN_PLUS_1];
+vector<int> trav;
+
+int find(int idx)
+{
+    if (idx == group[idx]) return idx;
+    return group[idx] = find(group[idx]);
+}
+
+void merge(int a, int b)
+{
+    group[find(b)] = find(a);
+}
 
 int main(int argc, char const *argv[])
 {
-    scanf("%d%d", &n, &m);
-    for (int i=0; i<n; i++) for (int j=0; j<n; j++) scanf("%d", map[i]+j);
-    for (int i=0, input; i<m; i++)
+    cin >> n >> m;
+    for (int i=1; i<=n; i++)
     {
-        scanf("%d", &input);
-        trip.push_back(input);
+        for (int j=1; j<=n; j++) 
+            cin >> board[i][j];
+        group[i] = i;
     }
 
-    for (int k=0; k<n; k++) for (int i=0; i<n; i++) for (int j=0; j<n; j++) if(map[i][k] & map[k][j]) map[i][j] = true;
+    for (int i=1; i<=n; i++)
+        for (int j=1; j<=n; j++)
+            if (board[i][j])
+                merge(i, j);
 
-    int prev = trip[0];
-    bool ret = true;
-    for (int i=1; i<m; i++)
+    for (int i=0, a; i<m; i++)
     {
-        if (!map[prev][i])
+        cin >> a;
+        trav.push_back(a);
+    }
+
+    bool ret = true;
+    for (auto& x : trav)
+    {
+        if (find(trav[0]) != find(x))
         {
             ret = false;
             break;
         }
-        prev = i;
     }
 
-    printf("%s\n", ret?"YES":"NO");
+    cout << (ret?"YES":"NO")<< '\n';
 
     return 0;
 }
