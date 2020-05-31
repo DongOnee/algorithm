@@ -1,91 +1,125 @@
 /**
- * 2019.06.28. 10:26 ~ 15:38 
+ * 2020.05.31. 19:35 ~ 06.01. 02:05
+ * 다익스트라를 이용해서 풀 수 있었던 문제이다.
+ * 하지만 많이 실패했는데.. 정리하면 다음과 같다.
+ * 1. 우선순위 큐 를 소팅하는 함수 구조체에 대해서 다시 공부해야 됐다.
+ * 2. 우선순위 큐 소팅하는 과정에서 필수 링크(g-h) 를 지났는지 여부에 대한 처리에 대해서 생각을 많이 했다.
+ * 3. 메모리 초과가 나는데 같은 노드에 같은 코스트로 여러번 갈 경우 디스크가 쌓여서 메모리 초과가 난다.
+ *      이 트러블 슈팅하기 위해서 isCrossGH 라는 bool 배열을 두어 g-h 를 지났는지 여부를 메모라이징 해두어
+ *      위 와같은 경우 isCrossGH 값을 확인하여 저장할 수 있도록 한다.
  */
-#include <cstdio>
+#include <iostream>
 #include <vector>
+#include <utility>
 #include <queue>
-#include <algorithm>
+#include <string.h>
+#include <queue>
+#include <functional>
 using namespace std;
 
-int t;
-int map[2001][2001], cnt[2][2001];
-vector<int> nears[2001];
-priority_queue<pair<int, pair<bool, int>>> pq;
+typedef pair<int, int> pii;
+
+int const MAXN = 2000;
+
+typedef struct
+{
+    int distance;
+    bool isGH;
+    int index;
+}elem;
+
+struct comp
+{
+    bool operator()(const elem& a, const elem& b) { return (a.distance != b.distance)?(a.distance > b.distance):b.isGH; }
+};
+
+int n, m, t, s, g, h, dist[MAXN];
+bool isCrossGH[MAXN];
+vector<pii> dist_next[MAXN];
+vector<int> candidate, answers;
+priority_queue<elem, vector<elem>, comp> pq;
+
+void sol()
+{
+    for( int i = 0; i < n; i++ )
+        dist_next[i].clear();
+    candidate.clear();
+    answers.clear();
+    memset(dist, 0x7f, sizeof(dist));
+    memset(isCrossGH, 0x00, sizeof(isCrossGH));
+
+    cin >> n >> m >> t >> s >> g >> h;
+    g--, h--;
+
+    for (int i = 0, a, b, d; i < m; i++)
+    {
+        cin >> a >> b >> d;
+        dist_next[a-1].push_back({d, b-1});
+        dist_next[b-1].push_back({d, a-1});
+    }
+
+    for (int i = 0, x; i < t; i++)
+    {
+        cin >> x;
+        candidate.push_back(x-1);
+    }
+
+    pq.push({0, false, s-1});
+    dist[s-1] = 0;
+    while( !pq.empty() )
+    {
+        elem t = pq.top(); pq.pop();
+
+        int distance = t.distance;
+        bool isGH = t.isGH;
+        int cur = t.index;
+        
+        if( distance == dist[cur] )
+        {
+            auto itr = find(candidate.begin(), candidate.end(), cur);
+            if( itr != candidate.end() )
+            {
+                candidate.erase(itr);
+                if( isGH )
+                    answers.push_back(cur);
+            }
+        }
+
+        for( pii& tmp : dist_next[cur] )
+        {
+            bool nextGH = isGH;
+            if( (cur == g && tmp.second == h) || (cur == h && tmp.second == g) )
+                nextGH = true;
+
+            int& distance_next = dist[tmp.second];
+            if( distance + tmp.first < distance_next )
+            {
+                distance_next = distance + tmp.first;
+                pq.push({distance_next, nextGH, tmp.second});
+                isCrossGH[tmp.second] = nextGH;
+            }
+            else if( distance + tmp.first == distance_next && !isCrossGH[tmp.second] && nextGH )
+            {
+                isCrossGH[tmp.second] = nextGH;
+                pq.push({distance_next, nextGH, tmp.second});
+            }
+        }
+    }
+
+    sort(answers.begin(), answers.end());
+    for (int& x : answers)
+        cout << x+1 << ' ';
+    cout << '\n';
+}
 
 int main(int argc, char const *argv[])
 {
-    scanf("%d", &t);
-    for (int test_case=0, n, m, cnt_candidate, start, g, h; test_case<t; test_case++)
-    {
-        vector<int> ans_vect;
-        scanf("%d%d%d%d%d%d", &n, &m, &cnt_candidate, &start, &g, &h);
-        for (int i=0; i<=n; i++)
-        {
-            for (int j=1; j<=n && 0<i; j++) map[i][j] = 987654321;
-            // nears[i].clear();
-            vector<int> empty_vt;
-            nears[i].swap(empty_vt);
-            cnt[0][i] = 987654321, cnt[1][i] = 987654321;
-        }
-        priority_queue<pair<int, pair<bool, int>>> empty_pq; swap(pq, empty_pq);
-        for (int i=0, a, b, d; i<m; i++)
-        {
-            scanf("%d%d%d", &a, &b, &d);
-            map[a][b] = d;
-            map[b][a] = d;
-            nears[a].push_back(b);
-            nears[b].push_back(a);
-        }
-        for (int i=0, a; i<cnt_candidate; i++)
-        {
-            scanf("%d", &a);
-            nears[0].push_back(a);
-        }
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-        pq.push({0, {false, start}});
-        cnt[false][start] = 0;
-        while (!pq.empty())
-        {
-            int distance = -pq.top().first;
-            int current_point = pq.top().second.second;
-            bool is_success = pq.top().second.first;
-            pq.pop();
-            // printf("%d %d %d\n", current_point, is_success, distance);
+    int test_case; cin >> test_case;
+    while(test_case--)
+        sol();
 
-            // if (cnt[is_success][current_point] <= distance) continue;
-            // else cnt[is_success][current_point] = distance;
-
-            bool find_goal = false;
-            for (vector<int>::iterator itr = nears[0].begin(); itr != nears[0].end(); itr++)
-            {
-                if (*itr == current_point)
-                {
-                    if (is_success)
-                    {
-                        ans_vect.push_back(current_point);
-                        find_goal = true;
-                        nears[0].erase(itr);
-                    }
-                    else nears[0].erase(itr);
-                    break;
-                }
-            }
-            // if (find_goal) continue;
-
-            for (int next_point : nears[current_point])
-            {
-                bool next_success = ((current_point == g && next_point == h) || (current_point == h && next_point == g) ? true : is_success);
-                if (distance + map[current_point][next_point] <= cnt[next_success][next_point] )
-                {
-                    cnt[next_success][next_point] = distance + map[current_point][next_point];
-                    pq.push({-cnt[next_success][next_point], { next_success, next_point}});
-                }
-            }
-        }
-
-        sort(ans_vect.begin(), ans_vect.end());
-        for (int x : ans_vect) printf("%d ", x);
-        printf("\n");
-    }
     return 0;
 }
