@@ -10,3 +10,5 @@ output*
 *_output*.txt
 test*
 tmp
+.a.out
+.gitignore
