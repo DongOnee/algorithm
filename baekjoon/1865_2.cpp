@@ -16,7 +16,7 @@ const int MAXTIME = 0x3f3f3f3f;
 int count_point, count_road, count_worm;
 
 vector<pii> road_time[2700];
-int travel_time[MAXPOINT][MAXPOINT];
+int travel_time[MAXPOINT];
 
 void init() {
     count_point = 0;
@@ -24,9 +24,7 @@ void init() {
     count_worm = 0;
 
     for (int i=0; i < MAXPOINT; ++i) {
-        for (int j = 0; j < MAXPOINT; ++j)
-            travel_time[i][j] = MAXTIME;
-        travel_time[i][i] = 0;
+        travel_time[i] = MAXTIME;
         road_time[i].clear();
     }
 }
@@ -35,28 +33,29 @@ void inputData() {
     cin >> count_point >> count_road >> count_worm;
     for (int i = 0, s, e, t; i < count_road; ++i) {
         cin >> s >> e >> t;
-        travel_time[s-1][e-1] = min(travel_time[s-1][e-1], t);
-        travel_time[e-1][s-1] = min(travel_time[e-1][s-1], t);
+        road_time[s-1].emplace_back(e-1, t);
+        road_time[e-1].emplace_back(s-1, t);
     }
     
     for (int i = 0, s, e, t; i < count_worm; ++i) {
         cin >> s >> e >> t;
-        travel_time[s-1][e-1] = min(travel_time[s-1][e-1], -t);
+        road_time[s-1].emplace_back(e-1, -t);
     }
 }
 
 bool run() {
-    
-    for (int way = 0; way < count_point; ++way) {
-        for (int src = 0; src < count_point; ++src) {
-            for (int dest = 0; dest < count_point; ++dest) {
-                travel_time[src][dest] = min(travel_time[src][dest], travel_time[src][way] + travel_time[way][dest]);
-
-                if (src == dest && travel_time[src][dest] < 0) return false;
+    for (int i=0; i<count_point; ++i) {
+        for (int index_point = 0; index_point < count_point; ++index_point) {
+            for (auto& next_point : road_time[index_point]) {
+                int dest = next_point.first;
+                int t = next_point.second;
+                if (travel_time[dest] > travel_time[index_point] + t) {
+                    travel_time[dest] = travel_time[index_point] + t;
+                    if (i == count_point - 1) return false;
+                }
             }
         }
     }
-    
     return true;
 }
 
