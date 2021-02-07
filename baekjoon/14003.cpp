@@ -8,12 +8,12 @@
  * 
  * 순열을 임시로 만드는데 아래 코드의 vt 이다.
  * arr 를 모두 돌면서 
- *  순열(vt)의 마지막(vt.back())보다 클 경우 마지막에 붙이고(push_back)
+ *  수열(vt)의 마지막(vt.back())보다 클 경우 마지막에 붙이고(push_back)
  *  아닌경우, lower_bound 를 이용해서 <크거나 같은 원소 중 가장 작은 인덱스>에 해당하는 곳에 수정한다.
- * 이때! 순열(vt) 의 수정이 일어난다.
- *  --> 이로 인해 위 루프의 결과 나오는 순열(vt) 는 우리가 원하는 순열이 아닐 수 있다.
+ * 이때! 수열(vt) 의 수정이 일어난다.
+ *  --> 이로 인해 위 루프의 결과 나오는 수열(vt) 는 우리가 원하는 순열이 아닐 수 있다.
  *      ex) 1 2 4 5 3 이라는 입력이 들어왔을 때,
- *          최종 순열(vt) 는 1 2 3 5 로 변하지만
+ *          최종 수열(vt) 는 1 2 3 5 로 변하지만
  *          옳은 답은 1 2 4 5 이다.
  * 따라서 핵심.2 를 만족시켜야 된다.
  * 이를 위해 position 이라는 배열을 추가하였다.
@@ -32,11 +32,13 @@
 #include <stack>
 using namespace std;
 
-#define MAXN 1'000'001
+const int MAXN = 1'000'000;
+// const int MAXA = 1'000'000'000;
+const int MINA = -1'000'000'000;
 
 int n, arr[MAXN], position[MAXN];
 
-int main(int argc, char const *argv[])
+int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -46,7 +48,7 @@ int main(int argc, char const *argv[])
         cin >> arr[i];
 
     vector<int> vt;
-    vt.push_back(-1'000'000'001);
+    vt.push_back(MINA - 1);
     for (int i=0; i<n; i++)
     {
         if (vt.back() < arr[i])
