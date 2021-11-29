@@ -1,2 +1,14 @@
+# directory
 .vscode
+.DS_Store
+.DS_Store?
+executefile
+
+# excute file
+*.dSYM
+*input*
+*output*
+*test*
+*.swp
+tmp
 a.out
