@@ -12,3 +12,4 @@ executefile
 *.swp
 tmp
 a.out
+*.exe
